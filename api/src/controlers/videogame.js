@@ -46,7 +46,7 @@ const getApiVideogames = async () => {
 
 const getDbVideogames = async () => {
     try{
-     return await Videogame.findAll({      //Busque varias instancias. o encuentre todo que
+     return await Videogames.findAll({      //Busque varias instancias. o encuentre todo que
          include: {
              model: Genres,
              attributes: ["name"],
@@ -77,8 +77,8 @@ const getDbVideogames = async () => {
         try{
             // let x = {id: id}
             // let y = id.length
-         if (id.length > 10) {
-             console.log("soy el If")
+         if (id.length > 10) {                  //videogame creados con uuid 
+            //  console.log("soy el If")
          let videogamedb = await Videogames.findAll({  
                include: {
                  model: Genres
@@ -98,9 +98,9 @@ const getDbVideogames = async () => {
              })
              return vg                   
             }else{
-                console.log("soy el else")
+                // console.log("soy el else")
                  let url = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
-                 let videodb = {        //[S]
+                 let videodb = {        //[]                 videogame de la Api
                     name: url.data.name,
                     id: url.data.id,
                     image: url.data.background_image,

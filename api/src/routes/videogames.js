@@ -10,7 +10,7 @@ router.get('/', async (req, res, next) => {
     const {name} = req.query
          let videogamesTotal = await getAllInfo();
     if(name){
-        let videogamesName = await videogamesTotal.filter(e => e.name.toLowerCase().includes(name.toLowerCase()))//
+        let videogamesName = videogamesTotal.filter(e => e.name.toLowerCase().includes(name.toLowerCase()))//
         videogamesName.length ?
         res.status(200).send(videogamesName) : 
         res.status(404).send({info:'El videogames no existe'});                                     // aqui imagen
@@ -18,8 +18,8 @@ router.get('/', async (req, res, next) => {
         res.json(videogamesTotal);
     }
     } catch (error) {
-        console.log(error, "no existe nombre")
-        // next()
+        // console.log(error, "no existe nombre")
+        next()
       }
 });
 
