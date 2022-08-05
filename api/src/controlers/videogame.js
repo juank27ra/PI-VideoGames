@@ -3,7 +3,7 @@ const axios = require ('axios')
 // const {API_KEY} = process.env
 // console.log(API_KEY)
 // const API_KEY = "8b4736bfe09f49828f6423cdbef6343b"
-const {Videogame, Genres} = require ('../db')
+const {Videogames, Genres} = require ('../db')
 const { env } = require ('process');
 const e = require('express');
 const API_KEY = env.API_KEY
@@ -73,35 +73,50 @@ const getDbVideogames = async () => {
       };
     //   console.log(getAllInfo())
  
-    const getId = async () => {
+    const getId = async (id) => {
         try{
-         if(id.length >= 10) {
-             const idDb = await Videogame.findByPk({                //findOne
-                where: {id: {[Op.eq]: id}},      //donde ----para verificar el mismo valor disponible en la tabla, usamos igual para firmar (=)
-                include: {model: Genres}
+            // let x = {id: id}
+            // let y = id.length
+         if (id.length > 10) {
+             console.log("soy el If")
+         let videogamedb = await Videogames.findAll({  
+               include: {
+                 model: Genres
+               },
+               where: {id: id}
+                })
+             let vg = videogamedb.map(e => {
+                return {
+                    name: e.name,        
+                    image: e.image,
+                    released: e.released,
+                    rating: e.rating,
+                    platforms: e.platform,
+                    genres: e.genres,
+                    description: e.description  
+                }
              })
-            //  if(idDb) {
-                return idDb
-            //  }
-         }else if(id.length < 10){
-            let url = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
-           var juego = {
+             return vg                   
+            }else{
+                console.log("soy el else")
+                 let url = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
+                 let videodb = {        //[S]
                     name: url.data.name,
                     id: url.data.id,
-                    background_image: url.data.background_image,
+                    image: url.data.background_image,
                     description: url.data.description_raw,
                     released: url.data.released,
                     rating: url.data.rating,
-                    platforms: url.data.platforms,
-                    genres: url.data.genres 
+                    platforms: url.data.parent_platforms.map(e => e.platform.name),
+                    genres: url.data.genres.map(e => e.name)
                 }
-               return juego 
-         } 
+                return videodb
+            }
         }catch(err){
              console.log("no se pudo traer el juego por id")       //()
         }
     }  
-console.log(getId())
+// console.log(getId("3498"))
 
     // router.get('/:id', async(req, res, next) =>{
     //     try {

@@ -33,7 +33,7 @@ const getInfoDb = async () => {
     console.log(allGenres)
     return gen
 }
-console.log(getInfoDb())
+// console.log(getInfoDb())
 
 module.exports = {
     getGenresApi,

@@ -48,17 +48,15 @@ router.post('/', async (req, res, next) => {
 })
 
 
-
-
 router.get('/:id', async (req, res, next) => {
+    const {id} = req.params
     try {
-        const {id} = req.params
-        const videogameId = await getId()
-             let videojuego = videogameId.filter(e => e.id == id)
-            videojuego.length ?
-            res.status(200).json(videojuego) :
+        const videogameId = await getId(id)
+            // videogameId.length ?
+            videogameId?
+            res.status(200).json(videogameId) :
             res.status(404).send('Id no encontrado 😥')
-    
+
     } catch (error) {
         next()
     }
@@ -80,7 +78,6 @@ module.exports = router;
 //     if(!post){
 //         return res.status(STATUS_USER_ERROR).json({error: "post encontrado"})
 //     }
-    
 //     posts = posts.filter(p => p.id !== id)
 
 //     res.json({ success: true })

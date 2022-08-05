@@ -24,7 +24,7 @@ const {getGenresApi }= require("./src/controlers/genres")
 // Syncing all the models at once.
 conn.sync({ force: false }).then(() => {
   server.listen(3001, () => {
-    getGenresApi();
+    // getGenresApi();
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
 });
