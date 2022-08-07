@@ -1,0 +1,23 @@
+.paginado{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    cursor: pointer;
+
+
+    /* color: blue;
+background-color: coral; */
+
+}
+.number {
+    display: contents;
+    
+}
+
+/* @media(max-width: 768px;) { 
+    header {
+        visibility: absolute;
+        top: 100%;
+        left: 0;
+    }
+} */
