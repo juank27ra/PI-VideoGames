@@ -13,7 +13,7 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 
 router.use('/videogames', videogamesRoutes )
-router.use('/videogame', videogamesRoutes )
+router.use('/videogame', videogamesRoutes ) //id
 router.use('/genres', genresRouter)
 
 module.exports = router;

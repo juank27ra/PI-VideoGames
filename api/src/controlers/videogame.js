@@ -1,13 +1,11 @@
 'use strict'
 const axios = require ('axios')
 // const {API_KEY} = process.env
-// console.log(API_KEY)
-// const API_KEY = "8b4736bfe09f49828f6423cdbef6343b"
+const API_KEY = "8b4736bfe09f49828f6423cdbef6343b"
 const {Videogames, Genres} = require ('../db')
-const { env } = require ('process');
-const e = require('express');
-const API_KEY = env.API_KEY
-// const {Op} = require('sequelize')
+// const { env } = require ('process');
+// const e = require('express');
+// const API_KEY = env.API_KEY
 
 const getApiVideogames = async () => {  
     try{
@@ -117,31 +115,6 @@ const getDbVideogames = async () => {
         }
     }  
 // console.log(getId("3498"))
-
-    // router.get('/:id', async(req, res, next) =>{
-    //     try {
-    //         const {id} = req.params
-    
-    //             const apiDataId = await axios.get(https://api.rawg.io/api/games/${id}?key=751305d507034a729a0f5ece9c3c8c6f)
-    //             console.log(apiDataId)
-    //             const gamexid = ({
-    //                             name:apiDataId.data.name,
-    //                             image: apiDataId.data.background_image,
-    //                             description: apiDataId.data.description,
-    //                             platforms: apiDataId.data.parent_platforms.map(plat => plat.platform.name),
-    //                             genres: apiDataId.data.genres.map(gen => gen.name),
-    //                             released: apiDataId.data.released,
-    //                             rating: apiDataId.data.rating
-    //             })
-    //             apiDataId?
-    //             res.status(200).json(gamexid):
-    //             res.status(404).send('no hay juegos con ese id')
-    //     } catch (error) {
-    //         next(error)
-    //     }
-    // })
-    // console.log(getId())
-
 
  module.exports = {
      getAllInfo,

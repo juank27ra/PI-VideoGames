@@ -1,8 +1,9 @@
-import {GET_VIDEOGAMES, FILTER_BY_GENRES, FILTER_BY_CREATED, ORDER_BY_NAME, FILTER_BY_RATING, GET_NAME_VG } from './actions'
+import {GET_VIDEOGAMES, FILTER_BY_GENRES, FILTER_BY_CREATED, ORDER_BY_NAME, FILTER_BY_RATING, GET_NAME_VG, GET_GENRES, POST_VG, GET_DETAIL } from './actions'
 const initialState = {
         videogames: [],
         allVideogames:[],               // este estado para que siempre se guarde todos los vg y busque sobre todos
-        genres: []
+        genres: [],
+        detail: {}
 }
 
 export default function rootReducers(state = initialState, action) {
@@ -57,7 +58,20 @@ export default function rootReducers(state = initialState, action) {
                     ...state,
                     videogames: action.payload
                 }
-                
+            case GET_GENRES:
+                return {
+                    ...state,
+                    genres: action.payload
+                }
+            case POST_VG:
+                return{
+                    ...state, 
+                }
+            case GET_DETAIL:
+                return {
+                    ...state,
+                    detail: action.payload          //
+                }
         default:
             return state;
     }

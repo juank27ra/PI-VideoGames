@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
     try {
-    const {name} = req.query                           // solo 15
+    const {name} = req.query                        
          let videogamesTotal = await getAllInfo();
     if(name){
         let videogamesName = videogamesTotal.filter(e => e.name.toLowerCase().includes(name.toLowerCase()))//
@@ -16,9 +16,10 @@ router.get('/', async (req, res, next) => {
         res.status(404).send({info:'El videogames no existe'});                                     // aqui imagen
     }else{
         res.json(videogamesTotal);
+        // res.status(404).send("No existe VideoGames con este ${name}");
     }
     } catch (error) {
-        console.log(error, "No existe VideoGames con este ${name} ")
+        console.log(error, "no se pueden traer los videogames")
         // next()
       }
 });

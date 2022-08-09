@@ -10,7 +10,7 @@ try{
         // let apiData = await axios.get(apiUrl);
          apiUrl = apiUrl.data.results.map(e => {
             return allGenres.push({
-                name: e.name,
+                name: e.name ,                 // + (' ')
                 id: e.id
             })
         })
@@ -30,7 +30,7 @@ const getInfoDb = async () => {
             name: e.name
         }
     })
-    console.log(allGenres)
+    // console.log(allGenres)
     return gen
 }
 // console.log(getInfoDb())

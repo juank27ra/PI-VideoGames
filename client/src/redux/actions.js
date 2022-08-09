@@ -5,6 +5,9 @@ export const FILTER_BY_CREATED = 'FILTER_BY_CREATED'
 export const ORDER_BY_NAME = 'ORDER_BY_NAME'
 export const FILTER_BY_RATING = 'FILTER_BY_RATING'
 export const GET_NAME_VG = 'GET_NAME_VG'
+export const GET_GENRES = 'GET_GENRES'
+export const POST_VG = 'POST_VG'
+export const GET_DETAIL = 'GET_DETAIL'
 
 
 export const getVideogames = (name) => {
@@ -66,3 +69,53 @@ export const getNameVg = (name) =>{
     }
   }
 }
+
+export const getGenres = () => {
+  return async (dispatch) => {
+    var json = await axios.get(`http://localhost:3001/genres`)
+    return dispatch({
+      type: GET_GENRES,
+      payload: json.data
+    })
+  }
+}
+// console.log(getGenres())
+
+export const postVg =(payload) => {
+  return async (dispatch) => {
+   var json = await axios.post(`http://localhost:3001/videogames`, payload)   // s
+    return dispatch({
+      type: POST_VG,
+      payload: json.data
+    })
+   
+  // return json.data
+  }
+}
+//  console.log(postVg())
+
+export const getDetail = (id) => {
+  return async (dispatch) => {
+    if (id){
+      return await axios.get(`http://localhost:3001/videogame/${id}`)
+      .then(res => res.data)
+      .then(res => 
+        {
+        dispatch({
+          type: GET_DETAIL,
+          payload: res})
+      })
+    }
+  }
+}
+// export const getDetail = (id) => {
+//   return async function (dispatch){
+//     if (id){
+//      var json = await axios.get(`http://localhost:3001/videogame/` + id)
+//       return dispatch({
+//           type: GET_DETAIL,
+//           payload: json.data})
+      
+//     }
+//       }
+// }

@@ -68,12 +68,11 @@ dispatch(filterByRating(e.target.value))      //no funcional
 setCurrentPage(1); 
 }
 
-
   return (
     <div>
     <br/>
     <br/>
-          <Link to = {'/videogames'}>
+          <Link to = {'/videogames' }>
           <button>Crear Videogame 🛣️</button>
           </Link>  
           <h1>Videogames</h1>
@@ -84,7 +83,7 @@ setCurrentPage(1);
           <div>
             <select onChange={e => handleFilterByGenres(e)} >
                 <option value=''>Genero</option>
-                <option value='All'>Todos</option>
+                {/* <option value='All'>Todos</option> */}
                 <option value='Action'>Action</option>
                 <option value='Indie'>Indie</option>
                 <option value='Adventure'>Adventure</option>
@@ -114,7 +113,7 @@ setCurrentPage(1);
             </select>
           
             <select onChange={e => handleOrderName(e)}>  
-                <option value=''>Por Nombre</option>
+                <option value=''>Orden</option>
                 <option value='Asc'>A-Z</option>
                 <option value='Desc'>Z-A</option> 
             </select>
@@ -127,15 +126,10 @@ setCurrentPage(1);
                 <option value='4'>Cuatro</option> 
                 <option value='5'>Cinco</option> 
             </select>
-
-
             <br></br>
-            <br></br>
-          
+            <br></br>       
             <Searchbar/>
-        
-          <div>
-            
+          <div> 
             <Paginated
                 vgPerPage={vgPerPage}       //15
                 allVideogames={allVideogames.length}    //const
@@ -143,20 +137,19 @@ setCurrentPage(1);
                 currentPage={currentPage}
             />
           </div>
-      
       {
         //me traigo las props de card porque este componente home ya se trajo el componente
         // global, entonces lo mapeo y le paso cada cosa que necesito en la card
         currentVg ?
         currentVg.map((e) => {
           return (        
-            <div>
+            <div key={e.id}>
                <Link to = {"/home/" + e.id} /*style={{ textDecoration: 'none' }}*/>
                <Cardgame 
-               key={e.id}         
                name={e.name}
-               image={e.image}
-               genres={e.genres}/>
+               image={e.image}    //tener en cuenta como la creé en el db
+               genres={e.genres}
+               key={e.id}/>                
               </Link>
             </div>
               )
@@ -164,12 +157,9 @@ setCurrentPage(1);
             }
             <h5>Pagina: {currentPage}</h5>
              <button onClick={e => prevHandler(e)}>Prev</button> <button onClick={ e =>nextHandler(e)}>Next</button>
-             <Link to={'/'} className='titulo'> Videogame Exit</Link>
+             
           </div>
-
-
-
-          
+              <Link to={'/'} className='titulo'> Exit</Link>   
     </div>
   )
 }
