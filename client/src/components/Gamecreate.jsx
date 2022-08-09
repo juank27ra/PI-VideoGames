@@ -23,6 +23,7 @@ export default function Gamecreate() {
     const dispatch = useDispatch()
     const history = useHistory()
     const genres = useSelector((state) => state.genres)
+    // const vg = useSelector((state) => state.videogames)
     const [errors, setErrors] = useState({})
 
     const [input, setInput] = useState({        //para guardar el formulario, lo que necesita el post
@@ -172,7 +173,7 @@ export default function Gamecreate() {
                 </select>
 
                     <p>{input.genres.map(e => e + " ,")}</p> 
-                    <button disabled={Object.keys(errors).length} type="submit"> Crear Videogame</button>
+                    <button /*disabled={Object.keys(errors).length}*/ type="submit"> Crear Videogame</button>
                     {input.genres.map(e => 
                 <div key={e.id} >       
                         <p>{e}</p>

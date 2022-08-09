@@ -16,7 +16,7 @@ export default function Paginated({allVideogames, vgPerPage, paginado, currentPa
                 {pageNumber &&                                              //si tengo este arreglo mapeo y devulva cada numero que te devuelva el paginado
                 pageNumber.map(number =>(
                     <li className={css.number} key={number}>                    
-                    <button style={ currentPage === number ? {backgroundColor:"blue", color:"white", border:"white"} : {}} onClick={() => paginado(number)}>{number}</button>
+                    <button style={ currentPage === number ? {backgroundColor:"black", color:"white", border:"white"} : {}} onClick={() => paginado(number)}>{number}</button>
                         </li>
                     ))
                 }

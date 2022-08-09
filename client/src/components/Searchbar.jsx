@@ -14,8 +14,13 @@ function handleInputChange(e){
 
 function handleSubmit(e){
     e.preventDefault()
-    dispatch(getNameVg(name))   //lo que tengo en el stado name le va a llegar a mi accion 
-    setName("")
+    if(!name){
+        alert("Ingrese nombre")
+    }else{
+       dispatch(getNameVg(name))   //lo que tengo en el stado name le va a llegar a mi accion 
+    setName("") 
+    }
+    
      
 }
 

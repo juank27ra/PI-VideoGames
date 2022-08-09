@@ -36,6 +36,7 @@ router.post('/', async (req, res, next) => {
             platforms,
             genres,
             description,
+            createInDb,
         })
         const genresDb = await Genres.findAll({
             where: {name : genres}

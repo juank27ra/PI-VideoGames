@@ -1,44 +1,40 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {getDetail} from '../redux/actions'
-import { Link, useParams } from 'react-router-dom'
+import {getDetail, detailClean} from '../redux/actions'
+import { Link } from 'react-router-dom'
 
 
 export default function Detail(props) {
     // console.log(props)
-    // const dispatch = useDispatch()
-
-    // useEffect(() => {
-    //     dispatch(getDetail(props.match.params.id))
-    // })
-
-    // const myVg =useSelector ((state) => state.detail)  
-
     const dispatch = useDispatch()
-    const { id } = useParams(); // Para acceder al id del Detail
+    const id = props.match.params.id
+    const getVgDetail = useSelector((state) => state.detail)
 
 
     useEffect(() => {
         dispatch(getDetail(id))
     }, [dispatch, id])
 
-    const myVg =useSelector ((state) => state.detail)    
-    console.log(myVg)
+    useEffect(() => {
+    return () => {
+        dispatch(detailClean())
+    }    
+    }, [dispatch])
 
 
   return (
     <div>
 
         {
-            myVg ? 
+            getVgDetail ? 
                 <div >
-                    <h1>{myVg.name}</h1>
-                     <img className={myVg.img} src= {myVg.image} alt=""/> 
-                    <h4>Rating: {myVg.rating}</h4>
-                    <h4>Plataformas: {myVg.platforms}</h4>
-                    <h4>Descripción: {myVg.description}</h4>
-                    <h3>Generos: {!myVg.createInDb ? myVg.genres + ' ' : myVg[0].genres.map(e => e.name + (' '))}</h3>
-                    <Link to='/home'><button>Volver</button></Link>
+                    <h1>{getVgDetail.name}</h1>
+                     <img className={getVgDetail.img} src= {getVgDetail.image} alt=""/> 
+                    <h4>Rating: {getVgDetail.rating}</h4>
+                    <h4>Plataformas: {getVgDetail.platforms}</h4>
+                    <h4>Descripción: {getVgDetail.description}</h4>
+                    <h3>Generos: {!getVgDetail.createInDb ? getVgDetail.genres + ' ' : getVgDetail[0].genres.map(e => e.name + (' '))}</h3>
+                    <Link to='/home'><button>Volver</button></Link> 
                 </div> : <p>Loading...</p>
         }
             <Link to={'/'} className='titulo'> Salir</Link>          

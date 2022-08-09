@@ -1,4 +1,4 @@
-import {GET_VIDEOGAMES, FILTER_BY_GENRES, FILTER_BY_CREATED, ORDER_BY_NAME, FILTER_BY_RATING, GET_NAME_VG, GET_GENRES, POST_VG, GET_DETAIL } from './actions'
+import {GET_VIDEOGAMES, FILTER_BY_GENRES, FILTER_BY_CREATED, ORDER_BY_NAME, FILTER_BY_RATING, GET_NAME_VG, GET_GENRES, POST_VG, GET_DETAIL, DETAIL_CLEAN } from './actions'
 const initialState = {
         videogames: [],
         allVideogames:[],               // este estado para que siempre se guarde todos los vg y busque sobre todos
@@ -16,7 +16,8 @@ export default function rootReducers(state = initialState, action) {
             }
         case FILTER_BY_GENRES:
             const allGenres = state.genres
-            const filterGenres = action.payload === 'All' ? allGenres : allGenres.filter(e => e.name === action.payload)
+            const filterGenres = action.payload === 'Action' ? allGenres :
+             allGenres.filter(e => e.name === action.payload)
             return {
                 ...state,
                 genres: filterGenres
@@ -24,7 +25,8 @@ export default function rootReducers(state = initialState, action) {
         case FILTER_BY_CREATED:
             const allVideogames = state.allVideogames
             // const filterBycreate = action.payload === 'All' ? allVideogames : action.payload === 'Created'? allVideogames.filter(e => e.createInDb) : allVideogames.filter(e => !e.createInDb)
-            const filterBycreate = action.payload === 'Created'? allVideogames.filter(e => e.createInDb) : allVideogames.filter(e => !e.createInDb)
+            const filterBycreate = action.payload === 'Created'? 
+            allVideogames.filter(e => e.createInDb) : allVideogames.filter(e => !e.createInDb)
                 return {
                 ...state,
                 // videogames: filterBycreate    
@@ -72,6 +74,11 @@ export default function rootReducers(state = initialState, action) {
                     ...state,
                     detail: action.payload          //
                 }
+                case DETAIL_CLEAN:
+                    return {
+                        ...state,
+                        detail: []
+                    }
         default:
             return state;
     }

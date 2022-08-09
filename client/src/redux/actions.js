@@ -8,6 +8,7 @@ export const GET_NAME_VG = 'GET_NAME_VG'
 export const GET_GENRES = 'GET_GENRES'
 export const POST_VG = 'POST_VG'
 export const GET_DETAIL = 'GET_DETAIL'
+export const DETAIL_CLEAN = 'DETAIL_CLEAN'
 
 
 export const getVideogames = (name) => {
@@ -106,6 +107,13 @@ export const getDetail = (id) => {
           payload: res})
       })
     }
+  }
+}
+
+export const detailClean = (payload) => {
+  return {
+    type: DETAIL_CLEAN,
+    payload
   }
 }
 // export const getDetail = (id) => {
