@@ -45,9 +45,10 @@ const getApiVideogames = async () => {
 const getDbVideogames = async () => {
     try{
      return await Videogames.findAll({      //Busque varias instancias. o encuentre todo que
-         include: {
+        
+        include: {
              model: Genres,
-             attributes: ["name"],
+             attributes: ["name"],            //[]
              through: {                     //mediante
                 attributes: [],
              }
@@ -55,9 +56,10 @@ const getDbVideogames = async () => {
      })
     }catch (error) {
      console.log('Error en info Db');
+     console.log(error)
    }  
  }
-    // console.log(getDbVideogames())
+    console.log(getDbVideogames())
 
  const getAllInfo = async () => {
      try {
@@ -83,18 +85,23 @@ const getDbVideogames = async () => {
                },
                where: {id: id}
                 })
+               
              let vg = videogamedb.map(e => {
+                // e.Genres.forEach(e => console.log("soy el consaole.log", e.dataValues.name, " numero 21"))
+
                 return {
                     name: e.name,        
                     image: e.image,
                     released: e.released,
                     rating: e.rating,
                     platforms: e.platform,
-                    genres: e.genres,
-                    description: e.description  
+                    genres:  e.Genres.map(e => e.dataValues.name),
+                    description: e.description,
+                    createInDb: e.createInDb  
                 }
-             })
-             return vg                   
+             }) 
+            //  console.log(vg)
+             return vg[0]                   
             }else{
                 // console.log("soy el else")
                  let url = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)

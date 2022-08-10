@@ -1,6 +1,6 @@
 const express = require ('express');
 const {getAllInfo, getId} = require ('../controlers/videogame')
-const { Videogame, Genres} = require('../db')
+const { Videogames, Genres} = require('../db')
 
 const router = express.Router();
 
@@ -24,19 +24,19 @@ router.get('/', async (req, res, next) => {
       }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', async (req, res) => {
     const { name, image, released, rating, platforms, genres, description} = req.body
 
     try{
-        const newVideogame = await Videogame.create({                                   //create   findOrCreate
+        const newVideogame = await Videogames.create({                                   //create   findOrCreate
             name,
             image,
             released,
             rating,
             platforms,
             genres,
-            description,
-            createInDb,
+            description, 
+            createInDb: true
         })
         const genresDb = await Genres.findAll({
             where: {name : genres}
@@ -44,8 +44,8 @@ router.post('/', async (req, res, next) => {
         newVideogame.addGenres(genresDb)
         res.status(200).send('El videogame fue creado exitosamente😊')
     }catch(error){
-        next()
-        // console.log(error)
+        // next()
+        console.log(error)
     }
 })
 

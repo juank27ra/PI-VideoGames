@@ -31,7 +31,7 @@ module.exports = (sequelize) => {
     },
     createInDb: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
       defaultValue: true
     },
     image: {

@@ -3,7 +3,7 @@ const initialState = {
         videogames: [],
         allVideogames:[],               // este estado para que siempre se guarde todos los vg y busque sobre todos
         genres: [],
-        detail: {}
+        detail: []
 }
 
 export default function rootReducers(state = initialState, action) {

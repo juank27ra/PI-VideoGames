@@ -10,7 +10,7 @@ export default function Detail(props) {
     const id = props.match.params.id
     const getVgDetail = useSelector((state) => state.detail)
 
-
+    console.log(getVgDetail)
     useEffect(() => {
         dispatch(getDetail(id))
     }, [dispatch, id])
@@ -27,17 +27,17 @@ export default function Detail(props) {
 
         {
             getVgDetail ? 
-                <div >
-                    <h1>{getVgDetail.name}</h1>
-                     <img className={getVgDetail.img} src= {getVgDetail.image} alt=""/> 
+                <div  >
+                    <h1>Soy {getVgDetail.name }</h1>
+                      <img src= {getVgDetail.image} width="500px" height="350px" alt=""/> 
                     <h4>Rating: {getVgDetail.rating}</h4>
-                    <h4>Plataformas: {getVgDetail.platforms}</h4>
-                    <h4>Descripción: {getVgDetail.description}</h4>
-                    <h3>Generos: {!getVgDetail.createInDb ? getVgDetail.genres + ' ' : getVgDetail[0].genres.map(e => e.name + (' '))}</h3>
+                    <h4>Plataformas: {getVgDetail?.platforms}</h4>
+                   <h4>Descripción: {getVgDetail?.description}</h4>
+                    <h3>Generos: {getVgDetail?.genres?.map((e, i) => (<p key={i}>{e}</p>))}</h3>
                     <Link to='/home'><button>Volver</button></Link> 
                 </div> : <p>Loading...</p>
         }
-            <Link to={'/'} className='titulo'> Salir</Link>          
+            
     </div>
   )
 }

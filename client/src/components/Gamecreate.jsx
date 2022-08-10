@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {getGenres, postVg} from '../redux/actions'
+import {getGenres} from '../redux/actions'
+import axios from 'axios';
 // import Style  from '../css/Gamecreate.module.css'
 
 function validate(input){
@@ -56,10 +57,11 @@ export default function Gamecreate() {
             genres: [...input.genres, e.target.value]               // aqui en el estado me va a guardar cada vez que seleccione un temperamento en un array
         })
     }
-    const handleSubmit = (e) =>{
-        e.preventDefaul(e)
-        dispatch(postVg(input))
-        alert("videogame creado")
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        // dispatch(postVg(input))
+        axios.post("http://localhost:3001/videogames", input);
+        alert("videogame creado");
         setInput({
             name: '',
             rating: '',
@@ -69,7 +71,7 @@ export default function Gamecreate() {
             description:'',
             genres: []
         })
-        history.push('./home')
+        history.push('/home')
     }
      const handleDelete = (e) => {
         setInput({
@@ -150,7 +152,7 @@ export default function Gamecreate() {
                     />
             </div>
             <div>
-                    <label>Descripción:</label>
+                    <label>Descripción: </label>
                     <textarea
                     type= 'text'
                     value= {input.description}
@@ -160,7 +162,8 @@ export default function Gamecreate() {
                     />
             </div>
 
-                <div> Genres:    
+                <div> 
+                <label>Genres: </label>    
                  <select onChange={(e) => handleSelect(e)}>
                      <option value='' >Selecciona una opcion</option>
                         {genres?.map((e) => {               //mapeo el state
