@@ -2,3 +2,13 @@ ul.pdelete{
     display: inline;
   padding-right: 0.5em;
 }
+.inputs{
+  display: flex;
+  flex-direction: row;
+  display: table-caption;
+}
+.boton{
+  border-top: inset;
+  color: blue;
+  background-color: bisque;
+}

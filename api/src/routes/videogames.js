@@ -1,5 +1,5 @@
 const express = require ('express');
-const {getAllInfo, getId} = require ('../controlers/videogame')
+const {getAllInfo, getId, getinfoName, getPlataformas} = require ('../controlers/videogame')
 const { Videogames, Genres} = require('../db')
 
 const router = express.Router();
@@ -26,14 +26,15 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res) => {
     const { name, image, released, rating, platforms, genres, description} = req.body
-
+console.log(req.body)
     try{
+        var change= platforms.toString()
         const newVideogame = await Videogames.create({                                   //create   findOrCreate
             name,
             image,
             released,
             rating,
-            platforms,
+            platforms: change, 
             genres,
             description, 
             createInDb: true
@@ -47,6 +48,28 @@ router.post('/', async (req, res) => {
         // next()
         console.log(error)
     }
+})
+
+router.get('/name', async (req, res) => {
+    try {
+        const {name} = req.query                        
+             let videogamesTotal = await getinfoName(name);
+            // let videogamesName = videogamesTotal.filter(e => e.name.toLowerCase().includes(name.toLowerCase()))//
+           videogamesTotal.length?
+            res.status(200).send(videogamesTotal.slice(0, 15)) :
+            res.status(404).send(`videogame ${name} No encontrado`);                                     // aqui imagen
+        } catch (error) {
+            console.log(error, "no se pueden traer los videogames")
+       
+          }
+       
+})
+
+router.get('/platforms', async (req, res) => {
+    const platf = await getPlataformas()
+    platf? 
+    res.status(200).send(platf):
+    res.status(404).send('la plataforma no fue traida de la Api')
 })
 
 
@@ -63,6 +86,8 @@ router.get('/:id', async (req, res, next) => {
         next()
     }
 })
+
+
 
 module.exports = router;
 

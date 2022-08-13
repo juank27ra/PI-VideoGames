@@ -1,13 +1,15 @@
 import React from 'react'
 import {Link} from "react-router-dom"
+import style from '../css/Landingpage.module.css'
 
 export default function Landingpage() {
   return (
-    <div>
+    <div className={style.backg}>
     <br/>
-    <h1 >Bienvenidos a Tu Apps de Videogames</h1>
+    <h2 >Bienvenidos a Tu Apps de Videogames </h2>
+    
         <Link to = {'/home'} >
-            <button>Ingresar</button>
+            <button className={style.but}>Start</button>
         </Link>
 
     </div>

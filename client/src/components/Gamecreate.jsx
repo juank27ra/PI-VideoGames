@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {getGenres} from '../redux/actions'
-import axios from 'axios';
-// import Style  from '../css/Gamecreate.module.css'
+import {getGenres, postVg, getPlatforms} from '../redux/actions'
+// import axios from 'axios';
+import Style  from '../css/Gamecreate.module.css'
 
 function validate(input){
     let errors = {};
     
     if(!input.name){
         errors.name = 'Se requiere un Nombre';
-    }else if (!input.rating !== 'number' ){                                   //imput tiene la propiedad require para que sea requerido texto en cualquier campo
+    }else if (!input.rating  !== 'number' ){                                   //imput tiene la propiedad require para que sea requerido texto en cualquier campo
         errors.rating = 'Se requiere el número entre 0 y 5';            //hacer validacion por back y front es la mejor opcion
+    }else if(input.rating >= 0 && input.rating <= 5){
+        errors.rating = 'Se requiere el número entre 0 y 5'; 
     }else if(!input.platforms){
         errors.platforms ='Escoge una o mas plataformas';
     }else if(!input.released){
         errors.released ='Se requiere una fecha';
+    }else if(!input.Descripción){
+        errors.Descripción = "Parrafo no mayor a 250 caracteres"
     }
+// console.log(errors.length)
     return errors;
 }
 
@@ -24,8 +29,9 @@ export default function Gamecreate() {
     const dispatch = useDispatch()
     const history = useHistory()
     const genres = useSelector((state) => state.genres)
-    // const vg = useSelector((state) => state.videogames)
-    const [errors, setErrors] = useState({})
+    const platforms = useSelector((state) => state.plataformas)
+    // console.log(platforms)
+    const [errors, setErrors] = useState([""])
 
     const [input, setInput] = useState({        //para guardar el formulario, lo que necesita el post
             name: '',
@@ -36,9 +42,14 @@ export default function Gamecreate() {
             description:'',
             genres: []
     })
-    
+//    console.log(input)
+   
     useEffect(() => {
         dispatch(getGenres())       //para uqe me cargue todos los generos
+    }, [dispatch])
+
+    useEffect(() => {
+        dispatch(getPlatforms())
     }, [dispatch])
 
     const handleChange = (e) => {               // a  mi estado input
@@ -52,16 +63,25 @@ export default function Gamecreate() {
         }))                                         // si name es name o rating o es platform
     }                                               // y a la medida que va modificando me va llenando el estado
     const handleSelect = (e) => {
+        e.preventDefault()
         setInput({
             ...input,
-            genres: [...input.genres, e.target.value]               // aqui en el estado me va a guardar cada vez que seleccione un temperamento en un array
+            genres: [...input.genres, e.target.value]               // aqui en el estado me va a guardar cada vez que seleccione un genro en un array
         })
     }
+
+    const handleSelectDos = (e) => {
+        e.preventDefault()
+        setInput({
+            ...input,
+            platforms: [...input.platforms, e.target.value]
+        })
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        // dispatch(postVg(input))
-        axios.post("http://localhost:3001/videogames", input);
-        alert("videogame creado");
+        dispatch(postVg(input))
+        alert(`videogame creado con exito`);
         setInput({
             name: '',
             rating: '',
@@ -72,21 +92,28 @@ export default function Gamecreate() {
             genres: []
         })
         history.push('/home')
+       
     }
+    
      const handleDelete = (e) => {
         setInput({
             ...input,
             genres: input.genres.filter(el => el !== e)
         })
     }
-
+    const handleDeleteDos = (e) => {
+        setInput({
+            ...input,
+            platforms: input.platforms.filter(el => el !== e)
+        })
+    }
 
   return (
     <div >
         <br></br>
-            <Link to='/home'><button>Volver</button></Link>
+           
             <h1>Crea Tu VideoGame</h1>
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form className={Style.inputs} onSubmit={(e) => handleSubmit(e)}>
             <div>
                 <label>Nombre: </label>
                 <input
@@ -114,20 +141,31 @@ export default function Gamecreate() {
                         <p className="error">{errors.rating}</p>
                     )}
             </div>
-            <div>
+        <div>
                 <label>Plataformas: </label>
-                <input
-                // cambiar parapoder escoger plataformas
-                    type= 'text'
-                    value={input.platforms}
-                    name= 'platforms'
-                    placeholder='platforms'
-                    onChange={handleChange}
-                />
-                {errors.platforms && (
+                <select onChange={(e) => handleSelectDos(e)}>
+                <option value='' >Selecciona una opcion</option>
+                    {platforms?.map(e => (
+                            <option key={e.id} value={e.name}>{e.name}</option>
+                    ))}
+                {/* {errors.platforms && (
                         <p className="error">{errors.platforms}</p>
+                    )} */}
+                </select>
+             <div>
+                <p>{input.platforms.map(e => e + " ,")}</p> 
+                
+                <div>
+                {input.platforms.map(e => 
+                    <div key={e.id} >      {/*  // para que pueda eliminar los generos agregados */}
+                            <p>{e}</p>
+                            <h3 onClick={() => handleDeleteDos(e)}>x</h3>
+                    </div>
                     )}
-            </div>
+                 </div>               
+             </div>
+         </div>
+
             <div>
                 <label>Fecha de Creacion: </label>
                 <input
@@ -142,6 +180,7 @@ export default function Gamecreate() {
                     )}
             </div>
             <div>
+            {/* <img src={input.image}/> */}
                     <label>Imagen: </label>
                     <input
                     type= 'text'
@@ -175,19 +214,27 @@ export default function Gamecreate() {
                         })}
                 </select>
 
-                    <p>{input.genres.map(e => e + " ,")}</p> 
-                    <button /*disabled={Object.keys(errors).length}*/ type="submit"> Crear Videogame</button>
-                    {input.genres.map(e => 
-                <div key={e.id} >       
+                        {/* lista de generos agregados */}
+                    <p>{input.genres.map(e => e + " ,")}</p>       
+            </div>
+
+
+     <div>
+            {input.genres.map(e => 
+                <div key={e.id} >      {/*  // para que pueda eliminar los generos agregados */}
                         <p>{e}</p>
-                        <button onClick={() => handleDelete(e)}>x</button>
+                        <h3 onClick={() => handleDelete(e)}>x</h3>
                 </div>
                     )}
             </div>
-            
-
-        </form>
-        
+    <div>
+                    <button /*disabled={Object.keys(errors).length}*/ type="submit" className={Style.boton}> Crear Videogame</button>
+                    <br></br>
+                    <Link to='/home'><button>Volver</button></Link>
+                </div>
+                <button onClick={ () => console.log(input)}>input</button>
+        </form>     
+                
     </div>
   )
 }

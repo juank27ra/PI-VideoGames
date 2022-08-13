@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import {getNameVg} from '../redux/actions'
+import {getinfoName} from '../redux/actions'
 
 
 export default function Searchbar() {
@@ -17,8 +17,12 @@ function handleSubmit(e){
     if(!name){
         alert("Ingrese nombre")
     }else{
-       dispatch(getNameVg(name))   //lo que tengo en el stado name le va a llegar a mi accion 
-    setName("") 
+      try{ dispatch(getinfoName(name))   //lo que tengo en el stado name le va a llegar a mi accion 
+   
+       setName("") }
+        catch(e){
+            console.log(e, "soy el error ")
+        }
     }
     
      

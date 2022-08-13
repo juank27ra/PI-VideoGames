@@ -1,9 +1,12 @@
-import {GET_VIDEOGAMES, FILTER_BY_GENRES, FILTER_BY_CREATED, ORDER_BY_NAME, FILTER_BY_RATING, GET_NAME_VG, GET_GENRES, POST_VG, GET_DETAIL, DETAIL_CLEAN } from './actions'
+import {GET_VIDEOGAMES, FILTER_BY_GENRES, FILTER_BY_CREATED, ORDER_BY_NAME, FILTER_BY_RATING, GET_NAME_VG, GET_GENRES, POST_VG, GET_DETAIL, DETAIL_CLEAN, GET_NAME, GET_PLATFORMS, NOT_FOUND, EMPTY_ERROR } from './actions'
 const initialState = {
         videogames: [],
         allVideogames:[],               // este estado para que siempre se guarde todos los vg y busque sobre todos
         genres: [],
-        detail: []
+        detail: [],
+        filtered: [],
+        plataformas: [],
+        noEncontrado: []
 }
 
 export default function rootReducers(state = initialState, action) {
@@ -12,15 +15,18 @@ export default function rootReducers(state = initialState, action) {
             return {
                 ...state,
                 videogames: action.payload,      // en mi stado vg manda, action.payload, todo lo que mande la action get_videogame
-                allVideogames: action.payload     //tambien pon todos los vg en allvg
+                allVideogames: action.payload,//tambien pon todos los vg en allvg
+                filtered: action.payload     
             }
         case FILTER_BY_GENRES:
-            const allGenres = state.genres
-            const filterGenres = action.payload === 'Action' ? allGenres :
-             allGenres.filter(e => e.name === action.payload)
+            const allvg = state.allVideogames
+            const filterGenres = allvg.filter(e => {
+                if(!e.genres) return undefined;
+                return e.genres.includes(`${action.payload}`)
+            }) 
             return {
                 ...state,
-                genres: filterGenres
+            videogames: filterGenres
             }
         case FILTER_BY_CREATED:
             const allVideogames = state.allVideogames
@@ -49,8 +55,17 @@ export default function rootReducers(state = initialState, action) {
                 videogames: orderArr
             }
         case FILTER_BY_RATING:
-            const filterRating = state.videogames
-            const filtrado = action.payload === '5' ? filterRating.filter(e => e.rating) : filterRating.filter(e => e.rating === action.payload)
+            const filtrado = action.payload === 'Asc' ? 
+            state.filtered.sort((a, b) =>{
+                if(a.rating > b.rating) return 1        //true
+                if(b.rating > a.rating) return -1
+                return 0
+            }) :
+            state.filtered.sort((a, b) => {
+                if(a.rating > b.rating) return -1
+                if(b.rating > a.rating) return 1
+                return 0
+            })
             return{
                 ...state,
                 videogames: filtrado
@@ -79,6 +94,28 @@ export default function rootReducers(state = initialState, action) {
                         ...state,
                         detail: []
                     }
+                case GET_NAME:
+                    return {
+                        ...state,
+                        videogames: action.payload
+                    }
+                case NOT_FOUND:
+                    return {
+                        ...state,
+                        noEncontrado: [action.payload]
+                     
+                    }
+                case EMPTY_ERROR:
+                    return {
+                        ...state,
+                        noEncontrado: []
+                    }
+                
+                case GET_PLATFORMS:
+                return {
+                    ...state,
+                    plataformas: action.payload
+                }
         default:
             return state;
     }

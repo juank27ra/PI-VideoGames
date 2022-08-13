@@ -1,0 +1,32 @@
+.backg{
+    background-image: url(../components/imagenes.css/neon-game-controllers-or-joysticks-vector-37693953.jpg);
+    background-repeat: no-repeat;
+	/* background-size: 100% 100%; */
+	background-size:cover; 
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    color:white;
+    font-size: 3em;
+    /* font-family:'Times New Roman', Times, serif; */
+    /* font-family:fantasy; */
+    /* font-style: italic; */
+    text-shadow: 
+    3px 3px 1px blue,
+    5px 5px 2px rgb(124, 19, 87),
+    8px 8px 3px rgb(238, 238, 238);
+
+}
+.but{
+    margin-top: 250px;
+    background-color: transparent;
+    color: white;
+    height: 100px;
+    width: 300px;
+    font-size: 2em;
+    border: none;
+    font-family:'Times New Roman', Times, serif;
+    /* font-style: italic; */
+    text-shadow: 7px 4px 5px blue;
+
+}

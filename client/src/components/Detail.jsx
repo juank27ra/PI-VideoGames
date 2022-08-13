@@ -5,12 +5,10 @@ import { Link } from 'react-router-dom'
 
 
 export default function Detail(props) {
-    // console.log(props)
     const dispatch = useDispatch()
     const id = props.match.params.id
     const getVgDetail = useSelector((state) => state.detail)
 
-    console.log(getVgDetail)
     useEffect(() => {
         dispatch(getDetail(id))
     }, [dispatch, id])
@@ -21,12 +19,13 @@ export default function Detail(props) {
     }    
     }, [dispatch])
 
-
+    console.log(getVgDetail)
   return (
     <div>
 
         {
             getVgDetail ? 
+            
                 <div  >
                     <h1>Soy {getVgDetail.name }</h1>
                       <img src= {getVgDetail.image} width="500px" height="350px" alt=""/> 
@@ -41,4 +40,3 @@ export default function Detail(props) {
     </div>
   )
 }
-// console.log(Detail())

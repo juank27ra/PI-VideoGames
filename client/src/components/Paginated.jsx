@@ -16,6 +16,7 @@ export default function Paginated({allVideogames, vgPerPage, paginado, currentPa
                     <li className={css.number} key={number}>                    
                     <button style={ currentPage === number ? {backgroundColor:"black", color:"white", border:"white"} : {}} onClick={() => paginado(number)}>{number}</button>
                         </li>
+   
                     ))
                 }
             </ul>

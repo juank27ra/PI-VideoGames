@@ -9,6 +9,10 @@ export const GET_GENRES = 'GET_GENRES'
 export const POST_VG = 'POST_VG'
 export const GET_DETAIL = 'GET_DETAIL'
 export const DETAIL_CLEAN = 'DETAIL_CLEAN'
+export const GET_NAME = 'GET_NAME'
+export const GET_PLATFORMS = 'GET_PLATFORMS'
+export const NOT_FOUND = 'NOT_FOUND'
+export const EMPTY_ERROR = 'EMPTY_ERROR'
 
 
 export const getVideogames = (name) => {
@@ -27,12 +31,12 @@ export const getVideogames = (name) => {
               payload: json.data
           })
         }}
+
 export const filterVgByGenres = (payload) => {
   return async (dispatch) => {
-  var json = await axios.get(`http://localhost:3001/genres`)
     return dispatch({
       type: FILTER_BY_GENRES,
-      payload: json.data
+      payload 
     })
   }}
 
@@ -80,11 +84,10 @@ export const getGenres = () => {
     })
   }
 }
-// console.log(getGenres())
 
-export const postVg =(payload) => {
+export const postVg = (data) => {
   return async (dispatch) => {
-    await axios.post(`http://localhost:3001/videogames`, payload)   // s
+    await axios.post(`http://localhost:3001/videogames`, data)   // s
     // return dispatch({
     //   type: POST_VG,
     //   payload: json.data
@@ -93,12 +96,13 @@ export const postVg =(payload) => {
   // return json.data
   }
 }
-//  console.log(postVg())
+
+
 
 export const getDetail = (id) => {
   return async (dispatch) => {
     if (id){
-      return await axios.get(`http://localhost:3001/videogame/${id}`)
+      return await axios.get(`http://localhost:3001/videogame/${id}`)     //s
       .then(res => res.data)
       .then(res => 
         {
@@ -116,14 +120,35 @@ export const detailClean = (payload) => {
     payload
   }
 }
-// export const getDetail = (id) => {
-//   return async function (dispatch){
-//     if (id){
-//      var json = await axios.get(`http://localhost:3001/videogame/` + id)
-//       return dispatch({
-//           type: GET_DETAIL,
-//           payload: json.data})
-      
-//     }
-//       }
-// }
+
+export const getinfoName = (name) => {
+  return async (dispatch) => {
+    if (name){
+      return await axios.get(`http://localhost:3001/videogame/name?name=${name}`)     //s
+      .then(res => res.data)
+      .then(res => 
+        {
+        dispatch({
+          type: GET_NAME,
+          payload: res})
+      }).catch(res => dispatch({type: NOT_FOUND, payload: res.response.data}))
+    }
+  }
+}
+//----------------------plataformas para el create-----------------
+export const getPlatforms = () => {
+  return async (dispatch) => {
+    var json = await axios.get(`http://localhost:3001/videogames/platforms`)
+    return dispatch({
+      type: GET_PLATFORMS,
+      payload: json.data
+    })
+  }
+}
+export const emptyError = () => {
+  return async (dispatch) => {
+    return dispatch({
+      type: EMPTY_ERROR
+    })
+  }
+}
