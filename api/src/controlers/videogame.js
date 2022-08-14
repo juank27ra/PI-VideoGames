@@ -137,13 +137,6 @@ const getDbVideogames = async () => {
     const DbVideogames = async (name) => {
         try{
          return await Videogames.findAll({      //Busque varias instancias. o encuentre todo que 
-            // include: {
-            //      model: Genres,
-            //     //  attributes: ["name"],            //[]
-            //      through: {                     //mediante
-            //         attributes: [],
-            //      }
-            //  }
             where: {
                 name:{
                     [Op.iLike]:`%${name}%`

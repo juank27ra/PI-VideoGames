@@ -5,10 +5,46 @@ ul.pdelete{
 .inputs{
   display: flex;
   flex-direction: row;
-  display: table-caption;
+  flex-wrap: wrap;
+  gap: 20px;
+  /* display: table-caption; */
+  margin-left: 140px;
+  width: 180px;
 }
 .boton{
   border-top: inset;
-  color: blue;
-  background-color: bisque;
+  color: rgb(7, 7, 7);
+  background-color: orange;
+  margin-left: 520%;
+  margin-top: 60%;
+  height: 70px;
+  width: 130px;
+  border-radius: 25%;
+  border-color: rgb(255, 64, 0);
+}
+.nombre{
+  margin-top: 2%;
+  height: 150px;
+  color: orange;
+  font-size: 2.5em;
+  text-shadow: 8px 8px 3px rgb(238, 238, 238);
+}
+.total{
+  background-image: url(../components/imagenes.css/photo-1585620385456-4759f9b5c7d9.jpeg);
+  background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-size:cover; 
+    height: 150vh;
+    width: 100%;
+    margin: 0;
+    color:orange;
+}
+.volver{
+  border-top: inset;
+  color: rgb(7, 7, 7);
+  margin-left: 540%;
+  background-color: orange;
+  height: 10px;
+  width: 70px;
+  border-radius: 25%; 
 }

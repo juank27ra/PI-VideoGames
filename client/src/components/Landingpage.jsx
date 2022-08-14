@@ -5,11 +5,10 @@ import style from '../css/Landingpage.module.css'
 export default function Landingpage() {
   return (
     <div className={style.backg}>
-    <br/>
-    <h2 >Bienvenidos a Tu Apps de Videogames </h2>
-    
+    <br></br>
+        <h2 className={style.tit}>GAMEPAGE</h2>
         <Link to = {'/home'} >
-            <button className={style.but}>Start</button>
+            <button className={style.but}>STAR</button>
         </Link>
 
     </div>

@@ -1,0 +1,21 @@
+.fondo{
+    background-image: url('../components/imagenes.css/hhhhhws_Batman_3D_1920x1200.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+	background-size: 100% 100%;
+	background-size:cover; 
+    height: 100vh;
+    width: 100%; 
+    display: flex;
+    /* justify-content: flex-end; */
+    /* color: blueviolet; */
+}
+
+.descrip{
+    height: 10px;
+    width: auto;
+    margin-left: 750px;
+    margin-right: 250px;
+    color: rgb(4, 12, 58);
+    
+} 

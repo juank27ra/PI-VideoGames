@@ -86,84 +86,89 @@ setOrder(`Ordenado ${e.target.value}`)
     <div className={style.context}>
     <br/>
     <br/>
-          <Link to = {'/videogames' }>
-          <button>Crear Videogame 🛣️</button>
-          </Link>  
-          <h1>Videogames</h1>
-          <button onClick={e => {handleClick(e)}} >
-                Todos los Juegos
-          </button>
-
+          <h1 className={style.titulo}>GAME ZONE</h1>
+    <div className={style.navtot}>
+          <br></br>
+      <div className={style.navbar}>
+      <Searchbar/>
+         
           <div>
+          
             <select onChange={e => handleFilterByGenres(e)} >
-                <option value=''>Genero</option>
+                <option value=''>GENRE</option>
                 {allGenres.map(e => (
                       <option key={e.id} value={e.name}>{e.name}</option>  
                 ))
                 }
             </select>
-          
             <select onChange={e => handleFilterCreate(e)}>
-                <option value=''>Procedencia</option>
-                <option value='All'>Todos</option>
-                <option value='Created'>Creados</option>
-                <option value='Api'>Existentes</option>
+                <option value=''>ORIGIN</option>
+                <option value='All'>ALL</option>
+                <option value='Created'>CREATED</option>
+                <option value='Api'>EXISTING</option>
             </select>
           
             <select onChange={e => handleOrderName(e)}>  
-                <option value=''>Orden</option>
+                <option value=''>ORDER</option>
                 <option value='Asc'>A-Z</option>
                 <option value='Desc'>Z-A</option> 
             </select>
           
             <select onChange={e => handleFilterRating(e)} >
-                <option value=''>Rating</option>
-                <option value='Asc'>Ascendente</option>
-                <option value='Desc'>Descendente</option> 
-            </select>
-            <br></br>
-            <br></br>       
-            <Searchbar/>
-            <br></br>
-            <br></br>
+                <option value=''>RATING</option>
+                <option value='Asc'>UPWARD</option>
+                <option value='Desc'>FALLING</option> 
+            </select>      
+            <button onClick={e => {handleClick(e)}}>All GAMES </button> 
+
+            <Link to = {'/create' }><button>CREATE GAMING</button></Link>
+          </div>   
+     </div>
+    </div>
           <div> 
           {
-            error.length > 0 ? <img src='https://imgs.search.brave.com/qE9pfR2soVm5Gf7FovffgpRxpMbKVr9qar5Mpu63Hcw/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5O/cmxGVzAyQjQwMU4y/dVpmRnB5d21RSGFI/YSZwaWQ9QXBp' alt='' height="700px" width="1000px"/>:  <Paginated 
-
+            error.length > 0 ? <img src='https://i.pinimg.com/564x/5f/92/5a/5f925a4b065b191e76aed89ab4d94d17.jpg' 
+            alt='' height="600px" width="600px" />:  
+            <Paginated 
                 vgPerPage={vgPerPage}       //15
                 allVideogames={allVideogames.length}    //const
                 paginado={paginado}     //paso mi const pag
                 currentPage={currentPage}
             />
-            
                 }
           </div>
-      {
-        //me traigo las props de card porque este componente home ya se trajo el state
-        // global, entonces lo mapeo y le paso cada cosa que necesito en la card
-       error.length > 0 ? <h1 >{error[0]}</h1> :
-        currentVg ?
-        currentVg.map((e) => {
-          return (        
-            <div key={e.id} className={style.card}>
-               <Link to = {"/home/" + e.id} /*style={{ textDecoration: 'none' }}*/>
-               <Cardgame 
-               name={e.name}
-               image={e.image}    
-               genres={e.genres}
-               rating={e.rating}
-               key={e.id}/>                
-              </Link>
-            </div>
-              )
-            }) : <h2>Loading...</h2>
-            }
 
-           { error.length > 0 ? null:  <h5>Pagina: {currentPage}</h5>}
-             <button onClick={e => prevHandler(e)}>Prev</button> <button onClick={ e =>nextHandler(e)}>Next</button>
-             
-          </div>
-              <Link to={'/'} className='titulo'> Exit</Link>   
+          <div className={style.card}>
+                {
+                //me traigo las props de card porque este componente home ya se trajo el state
+                // global, entonces lo mapeo y le paso cada cosa que necesito en la card
+                error.length > 0 ? <h1 >{error[0]}</h1> :
+                currentVg ?
+                currentVg.map((e) => {
+                  return (        
+                    <div key={e.id} >
+                        <Link to = {"/home/" + e.id}>
+                        <Cardgame 
+                        name={e.name}
+                        image={e.image}    
+                        genres={e.genres}
+                        rating={e.rating}
+                        key={e.id}/>                
+                        </Link>
+                    </div>
+                      )
+                    }) : <h2>Loading...</h2>
+                  }
+               </div>
+                <div className={style.botones}>
+                  { error.length > 0 ? null:  <h5>Pagina: {currentPage}</h5>}
+                 <button onClick={e => prevHandler(e)}>Prev</button> <button onClick={ e =>nextHandler(e)}>Next</button>
+                </div>
+                <br/>
+            <div className={style.exit}>
+               <Link to={'/'} className='titulo'> Exit</Link>  
+                    
+            </div>
     </div>
   )
 }

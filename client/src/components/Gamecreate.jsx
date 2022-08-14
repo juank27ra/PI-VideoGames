@@ -30,7 +30,6 @@ export default function Gamecreate() {
     const history = useHistory()
     const genres = useSelector((state) => state.genres)
     const platforms = useSelector((state) => state.plataformas)
-    // console.log(platforms)
     const [errors, setErrors] = useState([""])
 
     const [input, setInput] = useState({        //para guardar el formulario, lo que necesita el post
@@ -42,7 +41,6 @@ export default function Gamecreate() {
             description:'',
             genres: []
     })
-//    console.log(input)
    
     useEffect(() => {
         dispatch(getGenres())       //para uqe me cargue todos los generos
@@ -109,10 +107,10 @@ export default function Gamecreate() {
     }
 
   return (
-    <div >
+    <div className={Style.total} >
         <br></br>
-           
-            <h1>Crea Tu VideoGame</h1>
+          <div className={Style.nombre}>  <h1>CREATE GAMING</h1></div>
+          
         <form className={Style.inputs} onSubmit={(e) => handleSubmit(e)}>
             <div>
                 <label>Nombre: </label>
@@ -180,7 +178,7 @@ export default function Gamecreate() {
                     )}
             </div>
             <div>
-            {/* <img src={input.image}/> */}
+            <img src={input.image} alt=""/>
                     <label>Imagen: </label>
                     <input
                     type= 'text'
@@ -203,7 +201,7 @@ export default function Gamecreate() {
 
                 <div> 
                 <label>Genres: </label>    
-                 <select onChange={(e) => handleSelect(e)}>
+                    <select onChange={(e) => handleSelect(e)}>
                      <option value='' >Selecciona una opcion</option>
                         {genres?.map((e) => {               //mapeo el state
                                 return(
@@ -212,11 +210,11 @@ export default function Gamecreate() {
                                     </>
                                 )
                         })}
-                </select>
+                    </select>
 
                         {/* lista de generos agregados */}
                     <p>{input.genres.map(e => e + " ,")}</p>       
-            </div>
+                </div>
 
 
      <div>
@@ -228,11 +226,11 @@ export default function Gamecreate() {
                     )}
             </div>
     <div>
-                    <button /*disabled={Object.keys(errors).length}*/ type="submit" className={Style.boton}> Crear Videogame</button>
-                    <br></br>
-                    <Link to='/home'><button>Volver</button></Link>
-                </div>
-                <button onClick={ () => console.log(input)}>input</button>
+                    <button /*disabled={Object.keys(errors).length}*/ type="submit" className={Style.boton}>{<h2>Crear Videogame</h2> }</button>
+                    <div className={Style.volver}>
+                    <Link to='/home'><button>{<h2>Volver</h2>}</button></Link>
+                    </div>
+    </div>
         </form>     
                 
     </div>

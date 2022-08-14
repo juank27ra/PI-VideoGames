@@ -34,10 +34,10 @@ function handleSubmit(e){
         <input
             value={name}
             type='text'
-            placeholder='Search...'
+            placeholder='SEARCH...'
             onChange= {(e) => handleInputChange(e) }
         />
-        <button /*disabled={Object.keys(name).length}*/ type='submit' onClick={(e) => handleSubmit(e)}>Search</button>
+        <button /*disabled={Object.keys(name).length}*/ type='submit' onClick={(e) => handleSubmit(e)}>SEARCH</button>
     </form>
   )
 }

@@ -1,5 +1,20 @@
-.inputs{
-    display: flex;
-    flex-direction: row;
-    display: table-caption;
-}
+
+.card {
+    border-radius: 25%;
+    width:'200px';
+    height: '250px';  
+   }
+   
+ 
+ .card:hover{
+ border-radius:25%;
+ -webkit-border-radius:25%;
+ box-shadow: 0px 0px 15px 15px #a96e41;
+ -webkit-box-shadow: 0px 0px 15px 15px #e0490d;
+ transform: rotate(360deg);
+ -webkit-transform: rotate(360deg);
+ }
+ 
+ .gen{
+  color: aliceblue;
+ }
