@@ -33,7 +33,7 @@ export default function Detail(props) {
                       <img src= {getVgDetail.image} width="600px" height="340px" alt=""/> 
                     <h4>Descripción: {getVgDetail?.description}</h4>
                     <h4>Rating: {getVgDetail.rating}</h4>
-                    <h4>Plataformas: {getVgDetail?.platforms}</h4>
+                    <h4>Plataformas: {getVgDetail?.platforms + ', '}</h4>
                     <h4>Generos: {getVgDetail?.genres?.map((e, i) => (<p key={i}>{e}</p>))}</h4>
                     <Link to='/home'><button>Volver</button></Link> 
                 </div> : <p>Loading...</p>

@@ -107,7 +107,8 @@ export const getDetail = (id) => {
       .then(res => 
         {
         dispatch({
-          type: GET_DETAIL,
+          type: GET_DETAIL, 
+          // type: GET_DETAIL, payload: console.log(res),
           payload: res})
       })
     }

@@ -9,8 +9,10 @@
  .card:hover{
  border-radius:25%;
  -webkit-border-radius:25%;
- box-shadow: 0px 0px 15px 15px #a96e41;
- -webkit-box-shadow: 0px 0px 15px 15px #e0490d;
+ /* box-shadow: 0px 0px 15px 15px #a96e41;
+ -webkit-box-shadow: 0px 0px 15px 15px #e0490d; */
+ box-shadow: 0px 0px 15px 15px aqua;
+ -webkit-box-shadow: 0px 0px 15px 15px #eeeded;
  transform: rotate(360deg);
  -webkit-transform: rotate(360deg);
  }

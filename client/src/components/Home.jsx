@@ -166,7 +166,7 @@ setOrder(`Ordenado ${e.target.value}`)
                 </div>
                 <br/>
             <div className={style.exit}>
-               <Link to={'/'} className='titulo'> Exit</Link>  
+               <Link to={'/'}> Exit</Link>  
                     
             </div>
     </div>

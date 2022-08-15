@@ -26,7 +26,7 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res) => {
     const { name, image, released, rating, platforms, genres, description} = req.body
-console.log(req.body)
+// console.log(req.body)
     try{
         var change= platforms.toString()
         const newVideogame = await Videogames.create({                                   //create   findOrCreate
@@ -94,61 +94,42 @@ module.exports = router;
 
 
 
-// server.delete('/posts', (req, res) => {
+// router.delete('/:id', (req, res) => {
 //     const { id } = req.body;
 
 //     if(!id){
-//         return res.status(STATUS_USER_ERROR).json({error: "no hay id"})
+//         return res.status(404).json({error: "No se encontró id"})
 //     }
-//     const post = posts.find(p => p.id === id)
-
-//     if(!post){
-//         return res.status(STATUS_USER_ERROR).json({error: "post encontrado"})
+//     const vg = Videogames.find(e => e.id === id)
+// console.log(vg)
+//     if(!vg){
+//         return res.status(404).json({error: "vg encontrado"})
 //     }
-//     posts = posts.filter(p => p.id !== id)
+//     vg = vg.filter(p => p.id !== id)
 
 //     res.json({ success: true })
 
 // })
-//------------------
-// server.delete('/author', (req, res) => {
-//     const { author } = req.body;
-//     console.log(req)
 
-//     if(!author){
-//         return res.status(STATUS_USER_ERROR).json({error: "error"})
-//     }
-//     const pos = posts.filter(p => p.author === author)
-
-//     if(!pos.length){
-//         return res.status(STATUS_USER_ERROR).json({error: "No existe el autor indicado"})
-//     }
-
-//     posts = posts.filter(p => p.author !== author)
-
-
-//     res.json(pos)
-
-// })
 //--------------------
-// server.put('/posts', (req, res) => {
-//     const {id, title, contents} = req.body;
+// server.put('/videogame', (req, res) => {
+//     const {id, name, genre} = req.body;
 
-//     if(!id || !title || !contents){
-//         return res.status(STATUS_USER_ERROR)
-//         .json({error: "No se recibieron los parámetros necesarios para modificar el Post"})
+//     if(!id || !name || !genre){
+//         return res.status(404)
+//         .json({error: "No se recibieron los parámetros necesarios para modificar el vg"})
 //     }
 
-//     const post = posts.find(p => p.id === id)
+//     const vg = vg.find(p => p.id === id)
 
-//     if(!post){
-//         return res.status(STATUS_USER_ERROR)
-//         .json({error: "No hay id que corresponda con un post valido"})
+//     if(!vg){
+//         return res.status(404)
+//         .json({error: "No hay id que corresponda con un vg valido"})
 //     }
 
-//     post.title = title;
-//     post.contents = contents;
+//     vg.name = name;
+//     vg.genre = genre;
 
-//     res.json(post)
+//     res.json(vg)
 
 // })

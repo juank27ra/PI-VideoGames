@@ -2,26 +2,39 @@ import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {getGenres, postVg, getPlatforms} from '../redux/actions'
-// import axios from 'axios';
 import Style  from '../css/Gamecreate.module.css'
 
 function validate(input){
     let errors = {};
+    let RegExpressionName = /^[a-zA-Z0-9_¿?¡! .-]*$/
+    let RegExpressionImg = /https?:\/\/.*\.(?:png|jpg)/
     
     if(!input.name){
-        errors.name = 'Se requiere un Nombre';
-    }else if (!input.rating  !== 'number' ){                                   //imput tiene la propiedad require para que sea requerido texto en cualquier campo
-        errors.rating = 'Se requiere el número entre 0 y 5';            //hacer validacion por back y front es la mejor opcion
-    }else if(input.rating >= 0 && input.rating <= 5){
-        errors.rating = 'Se requiere el número entre 0 y 5'; 
-    }else if(!input.platforms){
-        errors.platforms ='Escoge una o mas plataformas';
-    }else if(!input.released){
-        errors.released ='Se requiere una fecha';
-    }else if(!input.Descripción){
-        errors.Descripción = "Parrafo no mayor a 250 caracteres"
+        errors.name = "Se requiere un Nombre"
+      }else if (!RegExpressionName.test(input.name)){
+       errors.name = 'Nombre no Valido';
+        }             
+    if(!input.rating ){
+        errors.rating = 'Se requiere el número'; 
+        }else if(input.rating > 5){
+            errors.rating  = '5 es el valor maximo permitido' 
+        }else if(input.rating < 0){
+            errors.rating = '0 valor minimo permitido'
+        }          
+    if(!input.released){
+        errors.released = 'Se requiere una fecha';
+            }
+    if(!input.image){
+        errors.image = 'Importa una url de imagen'
+    }else if(!RegExpressionImg.test(input.image)){
+        errors.image = 'Url no valida'
     }
-// console.log(errors.length)
+    if(!input.description){
+        errors.description = "La descriptcion es requerido."
+      } else if(input.description.length > 100){
+        errors.description = "La descriptcion no debe exceder los 100 caracteres";
+      } 
+
     return errors;
 }
 
@@ -120,20 +133,25 @@ export default function Gamecreate() {
                     name= 'name'
                     placeholder='name'
                     onChange={handleChange}
+                    
                 />
                 {errors.name && (
-                        <p className="error">{errors.name}</p>
+                        <p>{errors.name}</p>
                     )}
             </div>
             <div>
                 <label>Rating: </label>
                 <input
-                    // required
+                    
                     type= 'number'
+                    max= '5'
+                    step= '0.01'
+                    min= '1'
                     value={input.rating}
                     name= 'rating'
                     placeholder='rating'
                     onChange={handleChange}
+                    
                 />
                 {errors.rating && (
                         <p className="error">{errors.rating}</p>
@@ -142,18 +160,15 @@ export default function Gamecreate() {
         <div>
                 <label>Plataformas: </label>
                 <select onChange={(e) => handleSelectDos(e)}>
-                <option value='' >Selecciona una opcion</option>
+                <option value=''  >Selecciona una opcion</option>
                     {platforms?.map(e => (
                             <option key={e.id} value={e.name}>{e.name}</option>
                     ))}
-                {/* {errors.platforms && (
-                        <p className="error">{errors.platforms}</p>
-                    )} */}
                 </select>
              <div>
                 <p>{input.platforms.map(e => e + " ,")}</p> 
                 
-                <div>
+                    <div className={Style.deletePlat}>
                 {input.platforms.map(e => 
                     <div key={e.id} >      {/*  // para que pueda eliminar los generos agregados */}
                             <p>{e}</p>
@@ -174,19 +189,25 @@ export default function Gamecreate() {
                     onChange={handleChange}
                 />
                 {errors.released && (
-                        <p className="error">{errors.released}</p>
+                        <p>{errors.released}</p>
                     )}
             </div>
             <div>
-            <img src={input.image} alt=""/>
+                    <div className={Style.img}>
+                           <img className={Style.imgsimul} src={input.image} alt=""/>
+                    </div>
                     <label>Imagen: </label>
                     <input
-                    type= 'text'
+                    type= 'text'            //file
                     value= {input.image}
                     name= 'image'
                     placeholder='Imagen'
                     onChange={(e) => handleChange(e)}
+                    required
                     />
+                    {errors.image && (
+                        <p>{errors.image}</p>
+                    )}
             </div>
             <div>
                     <label>Descripción: </label>
@@ -197,6 +218,9 @@ export default function Gamecreate() {
                     placeholder='description'
                     onChange={(e) => handleChange(e)}
                     />
+                     {errors.description && (
+                        <p>{errors.description}</p>
+                    )}
             </div>
 
                 <div> 
@@ -217,7 +241,7 @@ export default function Gamecreate() {
                 </div>
 
 
-     <div>
+            <div className={Style.deleteGenre}>
             {input.genres.map(e => 
                 <div key={e.id} >      {/*  // para que pueda eliminar los generos agregados */}
                         <p>{e}</p>
@@ -226,13 +250,15 @@ export default function Gamecreate() {
                     )}
             </div>
     <div>
-                    <button /*disabled={Object.keys(errors).length}*/ type="submit" className={Style.boton}>{<h2>Crear Videogame</h2> }</button>
+                    <button type="submit" className={Style.boton}><h3>Crear Videogame</h3></button>
                     <div className={Style.volver}>
-                    <Link to='/home'><button>{<h2>Volver</h2>}</button></Link>
+                    <Link to='/home'><button>{<h3>Volver</h3>}</button></Link>
                     </div>
     </div>
         </form>     
                 
     </div>
+
   )
 }
+//disabled={Object.keys(errors).length} 
