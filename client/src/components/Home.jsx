@@ -50,7 +50,6 @@ useEffect(() =>{                // trae del estado los vg cuando el componente s
 }, [dispatch])
 
 
-
 function handleClick(e) {
   e.preventDefault();
   dispatch(getVideogames())

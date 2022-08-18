@@ -28,25 +28,28 @@ function validate(input){
         errors.image = 'Importa una url de imagen'
     }else if(input.image.length < 3){
         errors.image = 'Url no valida'
-    }
+    }   //else if (!RegExpressionImg.test(input.image) && input.image){
+    //     errors.image = 'url no valida '
+    // }
+
     if(!input.description){
-        errors.description = "La descriptcion es requerido."
+        errors.description = "La descripción es requerida."
       } else if(input.description.length > 100){
-        errors.description = "La descriptcion no debe exceder los 100 caracteres";
+        errors.description = "La descriptción no debe exceder los 100 caracteres";
       } 
-    if(!input.platforms.length){
+    if(input.platforms.length < 1){
         errors.platforms = "complete este campo"
     }
-    if(!input.genres.length){
+    if(input.genres.length < 1){
         errors.genres = "Debe seleccionar una opción"
     }
-
     return errors;
 }
 
 export default function Gamecreate() {
     const dispatch = useDispatch()
     const history = useHistory()
+    const allVideog = useSelector((state) => state.videogames)
     const genres = useSelector((state) => state.genres)
     const platforms = useSelector((state) => state.plataformas)
     const [errors, setErrors] = useState([""])
@@ -78,31 +81,43 @@ export default function Gamecreate() {
         }))                                         
     }                                               // y a la medida que va modificando me va llenando el estado
     const handleSelect = (e) => {
-        // e.preventDefault()
+        e.preventDefault()
         setInput({
             ...input,
             genres: [...new Set([...input.genres, e.target.value])]               // aqui en el estado me va a guardar cada vez que seleccione un genro en un array
         })
+        setErrors(validate({
+            ...input,
+            genres:  e.target.value
+        }))  
     }
 
     const handleSelectDos = (e) => {
-        // e.preventDefault()
+        e.preventDefault()
         if(input.platforms.includes(e.target.value)){
             alert('😥😥no intentes seleccionarlo dos veces😊')
         }else{
             setInput({
             ...input,
             platforms: [...input.platforms, e.target.value]
-            
         })
         } 
+        setErrors(validate({
+            ...input,
+            platforms: e.target.value
+        })) 
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(postVg(input))
-        alert(`videogame creado con exito`);
-        setInput({
+        if(allVideog.filter(e => e.name === input.name).length > 0){
+            alert('videoGame ya existe')
+        } else if(Object.keys(errors).length !== 0 || input.genres.length < 1 || input.platforms.length < 1){  
+                alert('todos los campos son Obligatorios')  
+        }else{
+            dispatch(postVg(input))
+            alert(`videogame creado con exito`);
+            setInput({
             name: '',
             rating: '',
             platforms: [],
@@ -112,17 +127,16 @@ export default function Gamecreate() {
             genres: []
         })
         history.push('/home')
-    }
+        }
+    }  
+    
     
      const handleDelete = (e) => {
         setInput({
             ...input,
             genres: input.genres.filter(el => el !== e)
         })
-      setErrors(validate({
-            ...input,
-            genres: input.genres.filter(el => el === e)
-        }))  
+      
     }
 //----------------------------------------------------
     const handleDeleteDos = (e) => {
@@ -130,17 +144,14 @@ export default function Gamecreate() {
             ...input,
             platforms: input.platforms.filter(el => el !== e)
         })
-      setErrors(validate({
-            ...input,
-            platforms: input.platforms.filter(el => el === e)
-        }))  
+      
     }
 
   return (
     <div className={Style.total} >
         <br></br>
-          <div className={Style.nombre}>  <h1>CREATE GAMING</h1></div>
-          
+        <div className={Style.nombre}>  <h1>CREATE GAMING</h1></div>
+        
         <form className={Style.inputs} onSubmit={(e) => handleSubmit(e)}>
             <div>
                 <label>Name: </label>
@@ -190,18 +201,17 @@ export default function Gamecreate() {
                     
                 {/* revisado */}
             <div>
-                {input.platforms.map(e =><p key={e}>{e}</p> )}
                 
                     <div className={Style.deletePlat}>
                 {input.platforms.map(e => 
                     <div key={e} >      {/*  // para que pueda eliminar los generos agregados */}
-                            <p>{e},</p>
+                            <p>{e}</p>
                             <h3 onClick={() => handleDeleteDos(e)}>x</h3>
                     </div>
                     )}
-                 </div>               
-             </div>
-         </div>
+                </div>               
+            </div>
+        </div>
 
             <div>
                 <label>Released: </label>
@@ -249,7 +259,7 @@ export default function Gamecreate() {
                     )}
                         {/* lista de generos agregados */}
 
-                    {input.genres.map((e) => <p key={e}>{e}</p> )}                    
+                    {/* {input.genres.map((e) => <p key={e}>{e}</p> )}                     */}
                 </div>
 
 

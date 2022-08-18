@@ -104,19 +104,28 @@ router.delete('/:id', async (req, res, next) => {
     }
 })
 
-router.put('/:id', async (req, res) => {
-    const {id} = req.params;
-    if(!id){
-        return res.status(404).send("el id para modificar no ha sido encontrado")
-    }
-    try {
-        const idid = await modify(id)
-    res. status(201).send(idid)
-    } catch (error) {
-        console.log(error)
-    }
+// router.put('/:id', async (req, res) => {
+//     const {id} = req.params;
+//     let {name, image, platforms, genres, released, rating, description} = req.body
+//         const idid = await modify(id)
+//         try {
+//     if(id){
+//         res. status(201).send(idid = {
+//             name: "alberto",
+//             image: "nada",
+//             platforms: ['PC', 'Xbox Series S/X', 'PlayStation 4', 'PlayStation 3'],
+//             genres: ["Adventure", "Action"],
+//             released: "21-05-2011",
+//             rating: 4.29,
+//             description: "es el mejor juego modificado"
+//         })   
+//     }
+//         return res.status(404).send("el id para modificar no ha sido encontrado")
+//     } catch (error) {
+//         console.log(error)
+//     }
     
-})
+// })
 
 module.exports = router;
 

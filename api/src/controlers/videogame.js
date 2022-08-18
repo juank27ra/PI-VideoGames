@@ -26,7 +26,7 @@ const getApiVideogames = async () => {
                 released: e.released,
                 rating: e.rating,
                 platforms: e.platforms.map((e) => e.platform.name),
-                genres: e.genres.map((e) => e.name),
+                genres: e.genres.map((e) => e),                             //
                 description: e.description,
                 videogameApi: true,
             };     
@@ -85,12 +85,13 @@ const getDbVideogames = async () => {
                     released: e.released,
                     rating: e.rating,
                     platforms: e.platforms,             //
-                    genres:  e.Genres.map(e => e.dataValues.name),
+                    genres:  e.genres.map(e => e.dataValues.name),
                     description: e.description,
                     createInDb: e.createInDb  
                 }
             }) 
-            return vg[0]                   
+
+            return vg[0]
             }else{
                 let url = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
                  let videodb = {        //[]                 videogame de la Api
@@ -110,6 +111,7 @@ const getDbVideogames = async () => {
         }
     }  
 
+
    const getApiName = async (name) => {
             let videogames=[];
             let api = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&search=${name}`);
@@ -122,7 +124,7 @@ const getDbVideogames = async () => {
                     released: e.released,
                     rating: e.rating,
                     platforms: e.platforms.map((e) => e.platform.name),
-                    genres: e.genres.map((e) => e.name),
+                    genres: e.genres.map((e) => e),                         //
                     description: e.description,
                     videogameApi: true,
                 }
@@ -181,15 +183,16 @@ const getDbVideogames = async () => {
         return `el videogame ${findid.name} ha sido eliminado con exito`
    }
 
-   const modify = async(id) => {
-    const modId = await getId(id)
-    await Videogames.update({
-        where: {
-            id: modId
-        }
-    })
-    return "El videogame actualizado con exito "
-   }
+//    const modify = async(id) => {
+//     const modId = await getId(id)
+//     console.log(modId, "soy 186")
+//     await Videogames.update({
+//         where: {
+//             name: 'Jorge'
+//         }
+//     })
+//     return "El videogame actualizado con exito "
+//    }
 
 //    function modyfy(id){
 //     const findid = getId(id)
@@ -205,6 +208,6 @@ const getDbVideogames = async () => {
      getinfoName,
      getPlataformas, 
      deleteid,
-     modify
+    //  modify
 
  }
