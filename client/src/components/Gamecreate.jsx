@@ -7,7 +7,7 @@ import Style  from '../css/Gamecreate.module.css'
 function validate(input){
     let errors = {};
     let RegExpressionName = /^[a-zA-Z0-9_¿?¡! .-]*$/
-    let RegExpressionImg = /https?:\/\/.*\.(?:png|jpg)/
+    // let RegExpressionImg = /https?:\/\/.*\.(?:png|jpg)/
     
     if(!input.name){
         errors.name = "Se requiere un Nombre"
@@ -26,7 +26,7 @@ function validate(input){
             }
     if(!input.image){
         errors.image = 'Importa una url de imagen'
-    }else if(!RegExpressionImg.test(input.image)){
+    }else if(input.image.length < 3){
         errors.image = 'Url no valida'
     }
     if(!input.description){
@@ -34,6 +34,12 @@ function validate(input){
       } else if(input.description.length > 100){
         errors.description = "La descriptcion no debe exceder los 100 caracteres";
       } 
+    if(!input.platforms.length){
+        errors.platforms = "complete este campo"
+    }
+    if(!input.genres.length){
+        errors.genres = "Debe seleccionar una opción"
+    }
 
     return errors;
 }
@@ -57,11 +63,9 @@ export default function Gamecreate() {
    
     useEffect(() => {
         dispatch(getGenres())       //para uqe me cargue todos los generos
-    }, [dispatch])
-
-    useEffect(() => {
         dispatch(getPlatforms())
     }, [dispatch])
+
 
     const handleChange = (e) => {               // a  mi estado input
         setInput({                              
@@ -71,22 +75,27 @@ export default function Gamecreate() {
         setErrors(validate({
             ...input,
             [e.target.name] : e.target.value
-        }))                                         // si name es name o rating o es platform
+        }))                                         
     }                                               // y a la medida que va modificando me va llenando el estado
     const handleSelect = (e) => {
-        e.preventDefault()
+        // e.preventDefault()
         setInput({
             ...input,
-            genres: [...input.genres, e.target.value]               // aqui en el estado me va a guardar cada vez que seleccione un genro en un array
+            genres: [...new Set([...input.genres, e.target.value])]               // aqui en el estado me va a guardar cada vez que seleccione un genro en un array
         })
     }
 
     const handleSelectDos = (e) => {
-        e.preventDefault()
-        setInput({
+        // e.preventDefault()
+        if(input.platforms.includes(e.target.value)){
+            alert('😥😥no intentes seleccionarlo dos veces😊')
+        }else{
+            setInput({
             ...input,
             platforms: [...input.platforms, e.target.value]
+            
         })
+        } 
     }
 
     const handleSubmit = (e) => {
@@ -103,7 +112,6 @@ export default function Gamecreate() {
             genres: []
         })
         history.push('/home')
-       
     }
     
      const handleDelete = (e) => {
@@ -111,12 +119,21 @@ export default function Gamecreate() {
             ...input,
             genres: input.genres.filter(el => el !== e)
         })
+      setErrors(validate({
+            ...input,
+            genres: input.genres.filter(el => el === e)
+        }))  
     }
+//----------------------------------------------------
     const handleDeleteDos = (e) => {
         setInput({
             ...input,
             platforms: input.platforms.filter(el => el !== e)
         })
+      setErrors(validate({
+            ...input,
+            platforms: input.platforms.filter(el => el === e)
+        }))  
     }
 
   return (
@@ -126,7 +143,7 @@ export default function Gamecreate() {
           
         <form className={Style.inputs} onSubmit={(e) => handleSubmit(e)}>
             <div>
-                <label>Nombre: </label>
+                <label>Name: </label>
                 <input
                     type= 'text'
                     value={input.name}
@@ -157,21 +174,28 @@ export default function Gamecreate() {
                         <p className="error">{errors.rating}</p>
                     )}
             </div>
-        <div>
-                <label>Plataformas: </label>
-                <select onChange={(e) => handleSelectDos(e)}>
-                <option value=''  >Selecciona una opcion</option>
+        <div>                   
+                <label>Platforms: </label>
+                <select onChange={(e) => handleSelectDos(e)}>Selecciona una opcion
+                <option value='' disabled  >Selecciona una opcion</option>
                     {platforms?.map(e => (
-                            <option key={e.id} value={e.name}>{e.name}</option>
+                            <option key={e.id} value={e.name}>{e.name} </option>
+                            
                     ))}
                 </select>
-             <div>
-                <p>{input.platforms.map(e => e + " ,")}</p> 
+                {errors.platforms && (
+                        <p className="error">{errors.platforms}</p>
+                    )}
+
+                    
+                {/* revisado */}
+            <div>
+                {input.platforms.map(e =><p key={e}>{e}</p> )}
                 
                     <div className={Style.deletePlat}>
                 {input.platforms.map(e => 
-                    <div key={e.id} >      {/*  // para que pueda eliminar los generos agregados */}
-                            <p>{e}</p>
+                    <div key={e} >      {/*  // para que pueda eliminar los generos agregados */}
+                            <p>{e},</p>
                             <h3 onClick={() => handleDeleteDos(e)}>x</h3>
                     </div>
                     )}
@@ -180,7 +204,7 @@ export default function Gamecreate() {
          </div>
 
             <div>
-                <label>Fecha de Creacion: </label>
+                <label>Released: </label>
                 <input
                     type= 'date'
                     value={input.released}
@@ -196,7 +220,7 @@ export default function Gamecreate() {
                     <div className={Style.img}>
                            <img className={Style.imgsimul} src={input.image} alt=""/>
                     </div>
-                    <label>Imagen: </label>
+                    <label>Image: </label>
                     <input
                     type= 'text'            //file
                     value= {input.image}
@@ -209,8 +233,37 @@ export default function Gamecreate() {
                         <p>{errors.image}</p>
                     )}
             </div>
+
+                <div> 
+                <label>Genres: </label>    
+                    <select name="genres" onChange={(e) => handleSelect(e)}>
+                     <option value='' >Select</option>
+                        {genres?.map((e) => {               
+                                return(
+                                <option key={e.id} value={e.name}>{e.name}</option>   
+                                )
+                        })}
+                    </select>
+                    {errors.genres && (
+                        <p>{errors.genres}</p>
+                    )}
+                        {/* lista de generos agregados */}
+
+                    {input.genres.map((e) => <p key={e}>{e}</p> )}                    
+                </div>
+
+
+            <div className={Style.deleteGenre}>
+            {input.genres.map(e => 
+                <div key={e} >      {/*  // para que pueda eliminar los generos agregados */}
+                        <p>{e}</p>
+                        <h3 onClick={() => handleDelete(e)} >x </h3>
+                </div>
+                    
+                    )}
+            </div>
             <div>
-                    <label>Descripción: </label>
+                    <label>Description: </label>
                     <textarea
                     type= 'text'
                     value= {input.description}
@@ -222,37 +275,10 @@ export default function Gamecreate() {
                         <p>{errors.description}</p>
                     )}
             </div>
-
-                <div> 
-                <label>Genres: </label>    
-                    <select onChange={(e) => handleSelect(e)}>
-                     <option value='' >Selecciona una opcion</option>
-                        {genres?.map((e) => {               //mapeo el state
-                                return(
-                                    <>
-                                <option key={e.id} value={e.name}>{e.name}</option>   
-                                    </>
-                                )
-                        })}
-                    </select>
-
-                        {/* lista de generos agregados */}
-                    <p>{input.genres.map(e => e + " ,")}</p>       
-                </div>
-
-
-            <div className={Style.deleteGenre}>
-            {input.genres.map(e => 
-                <div key={e.id} >      {/*  // para que pueda eliminar los generos agregados */}
-                        <p>{e}</p>
-                        <h3 onClick={() => handleDelete(e)}>x</h3>
-                </div>
-                    )}
-            </div>
     <div>
-                    <button type="submit" className={Style.boton}><h3>Crear Videogame</h3></button>
+                    <button disabled={Object.keys(errors).length} type="submit" className={Style.boton}><h3>Create Game</h3></button>
                     <div className={Style.volver}>
-                    <Link to='/home'><button>{<h3>Volver</h3>}</button></Link>
+                    <Link to='/home'><button>{<h3>Return</h3>}</button></Link>
                     </div>
     </div>
         </form>     

@@ -71,14 +71,13 @@ const getDbVideogames = async () => {
             // let x = {id: id}
             // let y = id.length
          if (id.length > 10) {                  //videogame creados con uuid 
-         let videogamedb = await Videogames.findAll({  
-               include: {
-                 model: Genres
-               },
-               where: {id: id}
+            let videogamedb = await Videogames.findAll({  
+                include: {
+                model: Genres
+                },
+                where: {id: id}
                 })
-                // console.log(videogamedb)
-             let vg = videogamedb.map(e => {
+            let vg = videogamedb.map(e => {
                 // e.Genres.forEach(e => console.log("soy el consaole.log", e.dataValues.name, " numero 21"))
                 return {
                     name: e.name,        
@@ -90,11 +89,10 @@ const getDbVideogames = async () => {
                     description: e.description,
                     createInDb: e.createInDb  
                 }
-             }) 
-             console.log(vg)
-             return vg[0]                   
+            }) 
+            return vg[0]                   
             }else{
-                 let url = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
+                let url = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
                  let videodb = {        //[]                 videogame de la Api
                     name: url.data.name,
                     id: url.data.id,
@@ -111,7 +109,6 @@ const getDbVideogames = async () => {
              console.log("no se pudo traer el juego por id")       //()
         }
     }  
-    // console.log(getId("3fc006bb-22b9-496e-b6be-22ddfb6f3d8a"))
 
    const getApiName = async (name) => {
             let videogames=[];
@@ -146,19 +143,19 @@ const getDbVideogames = async () => {
          })
         }catch (error) {
          console.log('Error en info Db');
-       }  
-     }
- 
-   const getinfoName = async (name) => {
-       const nameDb = await DbVideogames(name)
+        }  
+    }
+
+    const getinfoName = async (name) => {
+        const nameDb = await DbVideogames(name)
     const nameApi = await getApiName(name)
     const totalInfo = nameDb.concat(nameApi)
     return totalInfo
-   }
+    }
 
-   const getPlataformas = async () => {
+    const getPlataformas = async () => {
     try{
-          let  platforms =  await getApiVideogames()
+        let  platforms =  await getApiVideogames()
    platforms = platforms.map(e => e.platforms).flat()
    platforms =[ ...new Set(platforms.sort())]
    platforms = platforms.map((e, i) => {
@@ -172,12 +169,42 @@ const getDbVideogames = async () => {
         console.log(err)
     }
    }
+   
+   const deleteid = async (id) => {
+    
+        const findid = await getId(id)
+        await Videogames.destroy({
+            where: {
+                id: id 
+            }
+        })
+        return `el videogame ${findid.name} ha sido eliminado con exito`
+   }
 
+//    const modify = async(id) => {
+//     const modId = await getId(id)
+//     await Videogames.update({
+//         where: {
+//             id: id
+//         }
+//     })
+//     return "El videogame actualizado con exito "
+//    }
+
+//    function modyfy(id){
+//     const findid = getId(id)
+//     console.log(findid)
+//         // .then(res => res)
+//         .then(res => res.findid)
+//    }
+// console.log(modyfy(3498))
 
  module.exports = {
      getAllInfo,
      getId, 
      getinfoName,
-     getPlataformas
+     getPlataformas, 
+     deleteid,
+    //  modify
 
  }

@@ -61,7 +61,6 @@ function handleFilterByGenres(e){       //no funcional
   e.preventDefault();
   dispatch(filterVgByGenres(e.target.value))
   setCurrentPage(1); 
-  // setOrder(`Ordenado ${e.target.value}`)
 }
 function handleFilterCreate(e){     // en esta funcion envío a la accion el valor del select
   e.preventDefault();
@@ -79,7 +78,7 @@ function handleFilterRating(e){
 e.preventDefault(); 
 dispatch(filterByRating(e.target.value))      //no funcional
 setCurrentPage(1); 
-setOrder(`Ordenado ${e.target.value}`)
+// setOrder(`Ordenado ${e.target.value}`)
 }
 
   return (
@@ -132,7 +131,7 @@ setOrder(`Ordenado ${e.target.value}`)
             <Paginated 
                 vgPerPage={vgPerPage}       //15
                 allVideogames={allVideogames.length}    //const
-                paginado={paginado}     //paso mi const pag
+                paginado={paginado}     
                 currentPage={currentPage}
             />
                 }

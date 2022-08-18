@@ -132,7 +132,10 @@ export const getinfoName = (name) => {
         dispatch({
           type: GET_NAME,
           payload: res})
-      }).catch(res => dispatch({type: NOT_FOUND, payload: res.response.data}))
+      }).catch(res => 
+            dispatch({
+              type: NOT_FOUND, 
+              payload: res.response.data}))
     }
   }
 }

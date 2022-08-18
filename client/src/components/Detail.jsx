@@ -17,10 +17,22 @@ export default function Detail(props) {
     useEffect(() => {
     return () => {
         dispatch(detailClean())
+        
     }    
     }, [dispatch])
 
-    console.log(getVgDetail)
+    // function onClick (e) {
+    //   return window.history.back()
+    // }
+  
+    // history.push({currentpage})
+    // history.goBack()
+    // window.history.back();
+    // window.history.go(-1);
+// window.history.back();
+// history.window.history.go(-1);
+
+
   return (
     <div className={style.fondo}>
 
@@ -31,11 +43,12 @@ export default function Detail(props) {
                     <h1>{getVgDetail.name }</h1>
                     <br/>
                       <img src= {getVgDetail.image} width="600px" height="340px" alt=""/> 
-                    <h4>Descripción: {getVgDetail?.description}</h4>
+                    <h4>Description: {getVgDetail?.description}</h4>
                     <h4>Rating: {getVgDetail.rating}</h4>
-                    <h4>Plataformas: {getVgDetail?.platforms + ', '}</h4>
-                    <h4>Generos: {getVgDetail?.genres?.map((e, i) => (<p key={i}>{e}</p>))}</h4>
+                    <h4>Platforms: {getVgDetail?.platforms + ', '}</h4>
+                    <h4>Genres: {getVgDetail?.genres?.map((e, i) => (<p key={i}>{e}</p>))}</h4>
                     <Link to='/home'><button>Volver</button></Link> 
+                    {/* <input type="button" value="Página anterior" onClick="history.go(-1)"></input> */}
                 </div> : <p>Loading...</p>
         }
             

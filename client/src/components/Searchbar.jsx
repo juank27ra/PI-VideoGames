@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {getinfoName} from '../redux/actions'
+import style from '../css/Searchbar.module.css'
 
 
 export default function Searchbar() {
@@ -15,29 +16,30 @@ function handleInputChange(e){
 function handleSubmit(e){
     e.preventDefault()
     if(!name){
-        alert("Ingrese nombre")
+        alert("Ingrese nombre de busqueda")
     }else{
-      try{ dispatch(getinfoName(name))   //lo que tengo en el stado name le va a llegar a mi accion 
+      try{ dispatch(getinfoName(name))   //lo que tengo en el input name le va a llegar a mi accion 
    
        setName("") }
         catch(e){
             console.log(e, "soy el error ")
         }
-    }
-    
-     
+    }  
 }
 
 
   return (
+    <div >
     <form >          
         <input
+            className={style.search}
             value={name}
             type='text'
             placeholder='SEARCH...'
             onChange= {(e) => handleInputChange(e) }
         />
-        <button /*disabled={Object.keys(name).length}*/ type='submit' onClick={(e) => handleSubmit(e)}>SEARCH</button>
+        <button className={style.but} disabled={Object.keys(!name).length} type='submit' onClick={(e) => handleSubmit(e)}>SEARCH</button>
     </form>
+  </div>  
   )
 }

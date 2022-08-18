@@ -13,10 +13,19 @@
 }
 .nombre{
   /* margin-top: 5%; */
-  height: 150px;
+  /* height: 150px;
   color: orange;
-  font-size: 2.5em;
+  font-size: 2.5em; */
   text-shadow: 8px 8px 3px rgb(238, 238, 238);
+  font-size: 45px;
+  font-family: Roboto;
+  font-weight: bold;
+  font-style: italic;
+  text-transform: uppercase;
+  /* text-decoration: underline; */
+  letter-spacing: 6px;
+  color: #4416c4;
+  background-color: transparent;
 }
 .total{
   background-image: url(../components/fuentes/mm8VUjY.jpg);
@@ -28,7 +37,7 @@
     height: 150vh;
     width: 100%;
     margin: 0;
-    color:orange;
+    color:aqua;
 }
 
 
@@ -56,21 +65,23 @@
   gap: 20px;
 }
 
-.boton{
-  color: rgb(7, 7, 7);
-  background-color: orange;
+/* .boton{ */
+  /* color: aqua;
+  /* background-color: orange; */
+  /* background-color: transparent;
   margin-top: 4%;
   height: 70px;
   width: 130px;
-  border-radius: 25%;
-  border-color: rgb(255, 64, 0);
-}
+  border-radius: 25%; */
+  /* border-color: rgb(255, 64, 0); */
+  /* border-color: aqua; */
+/* } */
 
 .volver{
   margin-top: 4%;
-  color: rgb(7, 7, 7);
+  color: blue;
   margin-left: 30%;
-  background-color: orange;
+  background-color: transparent;
   height: 10px;
   width: 70px;
   border-radius: 25%; 

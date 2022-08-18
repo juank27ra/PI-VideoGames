@@ -1,5 +1,5 @@
 const express = require ('express');
-const {getAllInfo, getId, getinfoName, getPlataformas} = require ('../controlers/videogame')
+const {getAllInfo, getId, getinfoName, getPlataformas, deleteid, modify} = require ('../controlers/videogame')
 const { Videogames, Genres} = require('../db')
 
 const router = express.Router();
@@ -57,7 +57,7 @@ router.get('/name', async (req, res) => {
             // let videogamesName = videogamesTotal.filter(e => e.name.toLowerCase().includes(name.toLowerCase()))//
            videogamesTotal.length?
             res.status(200).send(videogamesTotal.slice(0, 15)) :
-            res.status(404).send(`videogame ${name} No encontrado`);                                     // aqui imagen
+            res.status(404).send(`videogame ${name} No encontrado`);                               
         } catch (error) {
             console.log(error, "no se pueden traer los videogames")
        
@@ -89,27 +89,39 @@ router.get('/:id', async (req, res, next) => {
 
 
 
+router.delete('/:id', async (req, res, next) => {
+    
+    const { id } = req.params;
+    if(!id){
+        return res.status(404).json({error: "Se requiere Id"})
+    }
+    try {
+        const idFind = await deleteid(id)
+        res.status(201).json(idFind)
+
+    } catch (error) {
+         next(error)
+    }
+})
+
+// router.put('/', async (req, res) => {
+//     const {id} = req.body;
+//     if(!id){
+//         return res.status(404).send("el id para modificar no ha sido encontrado")
+//     }
+//     try {
+//         const idid = await modify(id)
+//     res. status(201).send(idid)
+//     } catch (error) {
+//         console.log(error)
+//     }
+    
+// })
+
 module.exports = router;
 
 
 
-
-// router.delete('/:id', (req, res) => {
-//     const { id } = req.body;
-
-//     if(!id){
-//         return res.status(404).json({error: "No se encontró id"})
-//     }
-//     const vg = Videogames.find(e => e.id === id)
-// console.log(vg)
-//     if(!vg){
-//         return res.status(404).json({error: "vg encontrado"})
-//     }
-//     vg = vg.filter(p => p.id !== id)
-
-//     res.json({ success: true })
-
-// })
 
 //--------------------
 // server.put('/videogame', (req, res) => {
