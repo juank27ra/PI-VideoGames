@@ -104,19 +104,19 @@ router.delete('/:id', async (req, res, next) => {
     }
 })
 
-// router.put('/', async (req, res) => {
-//     const {id} = req.body;
-//     if(!id){
-//         return res.status(404).send("el id para modificar no ha sido encontrado")
-//     }
-//     try {
-//         const idid = await modify(id)
-//     res. status(201).send(idid)
-//     } catch (error) {
-//         console.log(error)
-//     }
+router.put('/:id', async (req, res) => {
+    const {id} = req.params;
+    if(!id){
+        return res.status(404).send("el id para modificar no ha sido encontrado")
+    }
+    try {
+        const idid = await modify(id)
+    res. status(201).send(idid)
+    } catch (error) {
+        console.log(error)
+    }
     
-// })
+})
 
 module.exports = router;
 

@@ -181,15 +181,15 @@ const getDbVideogames = async () => {
         return `el videogame ${findid.name} ha sido eliminado con exito`
    }
 
-//    const modify = async(id) => {
-//     const modId = await getId(id)
-//     await Videogames.update({
-//         where: {
-//             id: id
-//         }
-//     })
-//     return "El videogame actualizado con exito "
-//    }
+   const modify = async(id) => {
+    const modId = await getId(id)
+    await Videogames.update({
+        where: {
+            id: modId
+        }
+    })
+    return "El videogame actualizado con exito "
+   }
 
 //    function modyfy(id){
 //     const findid = getId(id)
@@ -205,6 +205,6 @@ const getDbVideogames = async () => {
      getinfoName,
      getPlataformas, 
      deleteid,
-    //  modify
+     modify
 
  }
