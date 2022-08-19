@@ -1,5 +1,5 @@
 import React from 'react'
-import css from '../css/Paginated.module.css'
+import style from '../css/Paginated.module.css'
 
 export default function Paginated({allVideogames, vgPerPage, paginado, currentPage}) {
     const pageNumber = []
@@ -9,18 +9,19 @@ export default function Paginated({allVideogames, vgPerPage, paginado, currentPa
      }
      
      return (
-        <nav>
-            <ul className={css.paginado}>
+        <div className={style.num}>
+            <ul className={style.paginadoul}>
                 {pageNumber &&                                              //si tengo este arreglo mapeo y devulva cada numero que te devuelva el paginado
                 pageNumber.map(number =>(
-                    <li className={css.number} key={number}>                    
-                    <button style={  currentPage === number ? {backgroundColor:"black", color:"orange", border:"white"} : {backgroundColor:'grey'}} onClick={() => paginado(number)}>{number}</button>
+                    <li className={style.number} key={number}>                    
+                    <button className={currentPage === number ? style.active : style.page}  onClick={() => paginado(number)}>{number}</button>
+                    
                         </li>
-   
+                                                                        
                     ))
                 }
             </ul>
-        </nav>
+        </div>
     )
 }
 

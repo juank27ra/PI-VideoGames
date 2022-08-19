@@ -47,6 +47,8 @@ export default function Detail(props) {
                     <h4>Rating: {getVgDetail.rating}</h4>
                     <h4>Platforms: {getVgDetail?.platforms + ', '}</h4>
                     <h4>Genres: {getVgDetail?.genres?.map((e, i) => (<p key={i}>{e}</p>))}</h4>
+                    <br></br>
+                    <br></br>
                     <Link to='/home'><button>Volver</button></Link> 
                     {/* <input type="button" value="Página anterior" onClick="history.go(-1)"></input> */}
                 </div> : <p>Loading...</p>

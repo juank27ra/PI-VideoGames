@@ -19,9 +19,29 @@
  
  .gen{
   color: aliceblue;
-  /* background-color: blue; */
   box-shadow: 0 4px 27px 0 rgb(0 0 0 / 30%);
   border-radius: 25%;
   padding: 10px;
-  /* border-color: aqua; */
+  width: 300px;
+  height: 510px;
+ }
+ .contegenero{
+  display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    justify-content: space-around;
+    align-items: center;
+ }
+ .genero{
+  margin: 10px;
+ }
+ .titlegenero{
+  font-weight: 700;
+ }
+ .titlerating{
+  font-weight: 700;
+ }
+ .titelname{
+  margin: 15px;
  }

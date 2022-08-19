@@ -2,11 +2,8 @@
 const axios = require ('axios')
 require ('dotenv').config()
 const {API_KEY} = process.env
-// const API_KEY = "8b4736bfe09f49828f6423cdbef6343b"
+// const API_KEY = "751305d507034a729a0f5ece9c3c8c6f"
 const {Videogames, Genres} = require ('../db')
-// const { env } = require ('process');
-// const e = require('express');
-// const API_KEY = env.API_KEY
 const {Op} = require ('sequelize')
 
 const getApiVideogames = async () => {  
@@ -26,7 +23,7 @@ const getApiVideogames = async () => {
                 released: e.released,
                 rating: e.rating,
                 platforms: e.platforms.map((e) => e.platform.name),
-                genres: e.genres.map((e) => e),                             //
+                genres: e.genres.map((e) => e.name),                             // cambio
                 description: e.description,
                 videogameApi: true,
             };     
@@ -51,9 +48,9 @@ const getDbVideogames = async () => {
      })
     }catch (error) {
      console.log('Error en info Db');
-    //  console.log(error)
    }
 }
+
 
  const getAllInfo = async () => {
      try {
@@ -65,7 +62,8 @@ const getDbVideogames = async () => {
           console.log('Error en info total');
         }
       };
-   
+
+
     const getId = async (id) => {
         try{
             // let x = {id: id}

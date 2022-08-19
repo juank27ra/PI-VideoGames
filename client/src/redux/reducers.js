@@ -1,4 +1,5 @@
-import {GET_VIDEOGAMES, FILTER_BY_GENRES, FILTER_BY_CREATED, ORDER_BY_NAME, FILTER_BY_RATING, GET_NAME_VG, GET_GENRES, POST_VG, GET_DETAIL, DETAIL_CLEAN, GET_NAME, GET_PLATFORMS, NOT_FOUND, EMPTY_ERROR } from './actions'
+import {GET_VIDEOGAMES, FILTER_BY_GENRES, FILTER_BY_CREATED, ORDER_BY_NAME, FILTER_BY_RATING, 
+    GET_NAME_VG, GET_GENRES, POST_VG, GET_DETAIL, DETAIL_CLEAN, GET_NAME, GET_PLATFORMS, NOT_FOUND, EMPTY_ERROR, FILTER_PLATFORMS } from './actions'
 const initialState = {
         videogames: [],
         allVideogames:[],               // este estado para que siempre se guarde todos los vg y busque sobre todos
@@ -19,14 +20,23 @@ export default function rootReducers(state = initialState, action) {
                 filtered: action.payload     
             }
         case FILTER_BY_GENRES:
-            const allvg = state.allVideogames
-            const filterGenres = allvg.filter(e => {
-                if(!e.genres) return undefined;
-                return e.genres.includes(`${action.payload}`)
-            }) 
+            const genres = state.allVideogames
+            const allgenres = genres.filter(e => {
+                if(!e.genres) return undefined
+                return e.genres.includes(action.payload)
+            })
             return {
                 ...state,
-            videogames: filterGenres
+                videogames: allgenres
+            }
+        case FILTER_PLATFORMS:
+            const plat = state.allVideogames.filter(e => {
+                if(!e.platforms) return undefined
+                return e.platforms.includes(action.payload)
+            })
+            return {
+                ...state,
+                videogames: plat
             }
         case FILTER_BY_CREATED:
             const allVideogames = state.allVideogames
@@ -55,17 +65,19 @@ export default function rootReducers(state = initialState, action) {
                 videogames: orderArr
             }
         case FILTER_BY_RATING:
+            console.log(action.payload)
             const filtrado = action.payload === 'Asc' ? 
-            state.filtered.sort((a, b) =>{
+            state.videogames.sort((a, b) =>{
                 if(a.rating > b.rating) return 1        //true
                 if(b.rating > a.rating) return -1
                 return 0
             }) :
-            state.filtered.sort((a, b) => {
+            state.videogames.sort((a, b) => {
                 if(a.rating > b.rating) return -1
                 if(b.rating > a.rating) return 1
                 return 0
             })
+            console.log(filtrado)
             return{
                 ...state,
                 videogames: filtrado

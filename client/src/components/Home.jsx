@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux';
-import { getVideogames,filterVgByGenres,filterBycreate, orderByName, filterByRating, getGenres, emptyError } from '../redux/actions';
+import { getVideogames,filterVgByGenres,filterBycreate, orderByName, filterByRating, getGenres, emptyError, filterByplatform, getPlatforms } from '../redux/actions';
 import {Link} from 'react-router-dom'
 import Cardgame from './Cardgame';
 import Paginated from './Paginated';
@@ -15,6 +15,7 @@ export default function Home() {
     const allVideogames = useSelector((state) => state.videogames)    //trae en esta const todo lo que está en el state videogames en el reducer
     const allGenres = useSelector((state) => state.genres)
     const error = useSelector((state) => state.noEncontrado)
+    const platf= useSelector((state) => state.plataformas)
 
     const [/*order*/, setOrder] = useState('')
     const [currentPage, setCurrentPage] = useState(1)       //pag actual = 1 porque siempre voy a iniciar en la primerpagina
@@ -23,7 +24,7 @@ export default function Home() {
 
     const indexLastVg = currentPage * vgPerPage             //indice del ultimo videogm  1*15  2*15
     const indexFirstVg = indexLastVg - vgPerPage;        //inidce del primer Videogm 15-15  30-15 45-15
-    const currentVg = allVideogames.slice(indexFirstVg, indexLastVg) //del arreglode vg q me traiga cortalo desde el primer index de la pag hasta el ultimo index  del 0 al 14 porque el 15 no lo incluye el splice   // esto va cambiando
+    const currentVg = allVideogames.slice(indexFirstVg, indexLastVg) //del arreglode vg cortalo desde el primer index de la pag hasta el ultimo index  del 0 al 14
 
     const paginado = (pageNumber) => {        // depende del numero de pag que vaya apretando
       setCurrentPage(pageNumber)              //setea el n de pag y el slice cambia de currentvg
@@ -45,10 +46,13 @@ useEffect(() =>{                // trae del estado los vg cuando el componente s
 }, [dispatch])
 
 
-useEffect(() =>{                // trae del estado los vg cuando el componente se monta   //    me llena el estado cuando se monta el cmponente
+useEffect(() =>{                // trae del estado los generos cuando el componente se monta   //  
   dispatch(getGenres())     // despacho la action 
 }, [dispatch])
 
+useEffect(() => {
+  dispatch(getPlatforms())
+}, [dispatch])
 
 function handleClick(e) {
   e.preventDefault();
@@ -56,7 +60,7 @@ function handleClick(e) {
   dispatch(emptyError())
   setCurrentPage(1)
 }
-function handleFilterByGenres(e){       //no funcional
+function handleFilterByGenres(e){       
   e.preventDefault();
   dispatch(filterVgByGenres(e.target.value))
   setCurrentPage(1); 
@@ -74,10 +78,15 @@ function handleOrderName(e){
 }
 
 function handleFilterRating(e){
-e.preventDefault(); 
-dispatch(filterByRating(e.target.value))      //no funcional
-setCurrentPage(1); 
-// setOrder(`Ordenado ${e.target.value}`)
+  e.preventDefault(); 
+  dispatch(filterByRating(e.target.value))     
+  setCurrentPage(1); 
+  setOrder(`Ordenado ${e.target.value}`)
+}
+function handleorderPlatform(e){
+  e.preventDefault()
+  dispatch(filterByplatform(e.target.value))
+  setCurrentPage(1)
 }
 
   return (
@@ -91,29 +100,36 @@ setCurrentPage(1);
       <Searchbar/>
          
           <div>
+          <select onChange={e => handleorderPlatform(e)}>
+          <option value=''>Platforms</option>
+          {platf.map(e => (
+            <option key={e.id} value={e.name}>{e.name}</option> 
+
+          ))}
+          </select>
           
             <select onChange={e => handleFilterByGenres(e)} >
-                <option value=''>GENRE</option>
+                <option value='null' >GENRE</option>
                 {allGenres.map(e => (
                       <option key={e.id} value={e.name}>{e.name}</option>  
                 ))
                 }
             </select>
             <select onChange={e => handleFilterCreate(e)}>
-                <option value=''>ORIGIN</option>
+                <option value='null'  >ORIGIN</option>
                 <option value='All'>ALL</option>
                 <option value='Created'>CREATED</option>
                 <option value='Api'>EXISTING</option>
             </select>
           
             <select onChange={e => handleOrderName(e)}>  
-                <option value=''>ORDER</option>
+                <option value='null'>ORDER</option>
                 <option value='Asc'>A-Z</option>
                 <option value='Desc'>Z-A</option> 
             </select>
           
             <select onChange={e => handleFilterRating(e)} >
-                <option value=''>RATING</option>
+                <option value='null' >RATING</option>
                 <option value='Asc'>UPWARD</option>
                 <option value='Desc'>FALLING</option> 
             </select>      
@@ -151,6 +167,7 @@ setCurrentPage(1);
                         image={e.image}    
                         genres={e.genres}
                         rating={e.rating}
+                        platforms={e.platforms}
                         key={e.id}/>                
                         </Link>
                     </div>
@@ -163,10 +180,7 @@ setCurrentPage(1);
                  <button onClick={e => prevHandler(e)}>Prev</button> <button onClick={ e =>nextHandler(e)}>Next</button>
                 </div>
                 <br/>
-            <div className={style.exit}>
-               <Link to={'/'}> Exit</Link>  
-                    
-            </div>
+           
     </div>
   )
 }

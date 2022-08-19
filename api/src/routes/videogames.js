@@ -104,6 +104,26 @@ router.delete('/:id', async (req, res, next) => {
     }
 })
 
+router.put('/:id', async (req, res) => {
+
+    let { id } = req.params
+    let {name} = req.body
+
+    let rta = await Videogames.update(
+        {
+            name: name
+        },
+        {
+            where: {
+                id: id
+            }
+        }
+    )
+
+    res.json(rta)
+
+});
+
 // router.put('/:id', async (req, res) => {
 //     const {id} = req.params;
 //     let {name, image, platforms, genres, released, rating, description} = req.body

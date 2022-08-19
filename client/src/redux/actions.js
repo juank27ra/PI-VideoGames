@@ -13,6 +13,7 @@ export const GET_NAME = 'GET_NAME'
 export const GET_PLATFORMS = 'GET_PLATFORMS'
 export const NOT_FOUND = 'NOT_FOUND'
 export const EMPTY_ERROR = 'EMPTY_ERROR'
+export const FILTER_PLATFORMS = 'FILTER_PLATFORMS'
 
 
 export const getVideogames = (name) => {
@@ -153,6 +154,14 @@ export const emptyError = () => {
   return async (dispatch) => {
     return dispatch({
       type: EMPTY_ERROR
+    })
+  }
+}
+export const filterByplatform = (payload) => {
+  return async (dispatch) => {
+    return dispatch({
+      type: FILTER_PLATFORMS,
+      payload
     })
   }
 }

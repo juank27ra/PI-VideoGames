@@ -28,7 +28,7 @@ function validate(input){
         errors.image = 'Importa una url de imagen'
     }else if(input.image.length < 3){
         errors.image = 'Url no valida'
-    }   //else if (!RegExpressionImg.test(input.image) && input.image){
+    }  //else if (!RegExpressionImg.test(input.image) && input.image){
     //     errors.image = 'url no valida '
     // }
 
@@ -41,6 +41,7 @@ function validate(input){
         errors.platforms = "complete este campo"
     }
     if(input.genres.length < 1){
+        console.log(input.genres.length)
         errors.genres = "Debe seleccionar una opción"
     }
     return errors;
@@ -154,7 +155,7 @@ export default function Gamecreate() {
         
         <form className={Style.inputs} onSubmit={(e) => handleSubmit(e)}>
             <div>
-                <label>Name: </label>
+                <label className={Style.title}>Name: </label>
                 <input
                     type= 'text'
                     value={input.name}
@@ -164,11 +165,11 @@ export default function Gamecreate() {
                     
                 />
                 {errors.name && (
-                        <p>{errors.name}</p>
+                        <p className={Style.errors}>{errors.name}</p>
                     )}
             </div>
             <div>
-                <label>Rating: </label>
+                <label className={Style.title}>Rating: </label>
                 <input
                     
                     type= 'number'
@@ -182,11 +183,11 @@ export default function Gamecreate() {
                     
                 />
                 {errors.rating && (
-                        <p className="error">{errors.rating}</p>
+                        <p className={Style.errors}>{errors.rating}</p>
                     )}
             </div>
         <div>                   
-                <label>Platforms: </label>
+                <label className={Style.title}>Platforms: </label>
                 <select onChange={(e) => handleSelectDos(e)}>Selecciona una opcion
                 <option value='' disabled  >Selecciona una opcion</option>
                     {platforms?.map(e => (
@@ -195,16 +196,13 @@ export default function Gamecreate() {
                     ))}
                 </select>
                 {errors.platforms && (
-                        <p className="error">{errors.platforms}</p>
+                        <p className={Style.errors}>{errors.platforms}</p>
                     )}
-
-                    
-                {/* revisado */}
             <div>
                 
                     <div className={Style.deletePlat}>
                 {input.platforms.map(e => 
-                    <div key={e} >      {/*  // para que pueda eliminar los generos agregados */}
+                    <div key={e} className={Style.plat} >      {/*  // para que pueda eliminar los generos agregados */}
                             <p>{e}</p>
                             <h3 onClick={() => handleDeleteDos(e)}>x</h3>
                     </div>
@@ -214,7 +212,7 @@ export default function Gamecreate() {
         </div>
 
             <div>
-                <label>Released: </label>
+                <label className={Style.title}>Released: </label>
                 <input
                     type= 'date'
                     value={input.released}
@@ -223,14 +221,14 @@ export default function Gamecreate() {
                     onChange={handleChange}
                 />
                 {errors.released && (
-                        <p>{errors.released}</p>
+                        <p className={Style.errors}>{errors.released}</p>
                     )}
             </div>
             <div>
                     <div className={Style.img}>
-                           <img className={Style.imgsimul} src={input.image} alt=""/>
+                          { input.image? <img className={Style.imgsimul} src={input.image} alt=""/> : null}
                     </div>
-                    <label>Image: </label>
+                    <label className={Style.title}>Image: </label>
                     <input
                     type= 'text'            //file
                     value= {input.image}
@@ -240,12 +238,12 @@ export default function Gamecreate() {
                     required
                     />
                     {errors.image && (
-                        <p>{errors.image}</p>
+                        <p className={Style.errors}>{errors.image}</p>
                     )}
             </div>
 
                 <div> 
-                <label>Genres: </label>    
+                <label className={Style.title}>Genres: </label>    
                     <select name="genres" onChange={(e) => handleSelect(e)}>
                      <option value='' >Select</option>
                         {genres?.map((e) => {               
@@ -255,7 +253,7 @@ export default function Gamecreate() {
                         })}
                     </select>
                     {errors.genres && (
-                        <p>{errors.genres}</p>
+                        <p className={Style.errors}>{errors.genres}</p>
                     )}
                         {/* lista de generos agregados */}
 
@@ -273,7 +271,7 @@ export default function Gamecreate() {
                     )}
             </div>
             <div>
-                    <label>Description: </label>
+                    <label className={Style.title}>Description: </label>
                     <textarea
                     type= 'text'
                     value= {input.description}
@@ -282,7 +280,7 @@ export default function Gamecreate() {
                     onChange={(e) => handleChange(e)}
                     />
                      {errors.description && (
-                        <p>{errors.description}</p>
+                        <p className={Style.errors}>{errors.description}</p>
                     )}
             </div>
     <div>
