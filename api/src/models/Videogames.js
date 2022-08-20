@@ -12,21 +12,21 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     name : {
-      type: DataTypes.STRING,   //
+      type: DataTypes.STRING,   
       allowNull: false,
     },
     description: {
-      type: DataTypes.TEXT,     //
+      type: DataTypes.TEXT,     
       allowNull: false,
     },
     released: {
-      type: DataTypes.STRING,   //
+      type: DataTypes.STRING,   
     },
     rating: {
-      type: DataTypes.FLOAT,     //  o INTEGER 4,47  DOUBLE 
+      type: DataTypes.FLOAT,   
     },
     platforms: {
-      type: DataTypes.STRING, //
+      type: DataTypes.STRING, 
       allowNull: false,
     },
     createInDb: {

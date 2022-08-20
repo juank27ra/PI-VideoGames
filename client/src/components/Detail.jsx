@@ -21,16 +21,7 @@ export default function Detail(props) {
     }    
     }, [dispatch])
 
-    // function onClick (e) {
-    //   return window.history.back()
-    // }
-  
-    // history.push({currentpage})
-    // history.goBack()
-    // window.history.back();
-    // window.history.go(-1);
-// window.history.back();
-// history.window.history.go(-1);
+
 
 
   return (
@@ -50,7 +41,6 @@ export default function Detail(props) {
                     <br></br>
                     <br></br>
                     <Link to='/home'><button>Volver</button></Link> 
-                    {/* <input type="button" value="Página anterior" onClick="history.go(-1)"></input> */}
                 </div> : <p>Loading...</p>
         }
             

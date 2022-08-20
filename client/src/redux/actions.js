@@ -93,7 +93,7 @@ export const postVg = (data) => {
     //   type: POST_VG,
     //   payload: json.data
     // })
-   
+  
   // return json.data
   }
 }
@@ -126,7 +126,7 @@ export const detailClean = (payload) => {
 export const getinfoName = (name) => {
   return async (dispatch) => {
     if (name){
-      return await axios.get(`http://localhost:3001/videogame/name?name=${name}`)     //s
+      return await axios.get(`http://localhost:3001/videogame/name?name=${name}`) 
       .then(res => res.data)
       .then(res => 
         {
@@ -157,7 +157,8 @@ export const emptyError = () => {
     })
   }
 }
-export const filterByplatform = (payload) => {
+
+export const filterByPlataformas = (payload) => {
   return async (dispatch) => {
     return dispatch({
       type: FILTER_PLATFORMS,

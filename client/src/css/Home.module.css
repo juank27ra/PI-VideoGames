@@ -22,7 +22,7 @@
 .navtot{
     background-position: center center;
     /* background-color: rgb(170, 87, 36); */
-    background-color: rgb(106, 20, 20);
+    background-color: rgb(35, 36, 36);
     /* background-image: url(../components/imagenes.css/a6f7fa3450488cdec189cb9f611d2d98.jpg); */
     background-repeat: no-repeat;
     background-position:center;
@@ -41,10 +41,10 @@
 
 .titulo{
     text-align: left; 
-    font-family: Comic Sans MS; 
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
     font-weight:bold; 
     font-size: 5em; 
-    color: rgb(106, 20, 20); 
+    color: rgb(35, 36, 36); 
     text-shadow: -1px 0 #414D68, 0 1px #414D68, 1px 0 #414D68, 0 -1px #414D68, -2px 2px 0 #414D68, 2px 2px 0 #414D68, 1px 1px #414D68, 2px 2px #414D68, 3px 3px #414D68, 4px 4px #414D68, 5px 5px #414D68; 
     margin-top: 1%;
    margin-bottom: 5%;

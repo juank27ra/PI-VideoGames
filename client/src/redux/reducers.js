@@ -30,14 +30,16 @@ export default function rootReducers(state = initialState, action) {
                 videogames: allgenres
             }
         case FILTER_PLATFORMS:
-            const plat = state.allVideogames.filter(e => {
+            const plat = state.allVideogames
+            const allplatf = plat.filter(e => {
                 if(!e.platforms) return undefined
                 return e.platforms.includes(action.payload)
             })
             return {
                 ...state,
-                videogames: plat
+                videogames: allplatf
             }
+        
         case FILTER_BY_CREATED:
             const allVideogames = state.allVideogames
             // const filterBycreate = action.payload === 'All' ? allVideogames : action.payload === 'Created'? allVideogames.filter(e => e.createInDb) : allVideogames.filter(e => !e.createInDb)
@@ -65,7 +67,6 @@ export default function rootReducers(state = initialState, action) {
                 videogames: orderArr
             }
         case FILTER_BY_RATING:
-            console.log(action.payload)
             const filtrado = action.payload === 'Asc' ? 
             state.videogames.sort((a, b) =>{
                 if(a.rating > b.rating) return 1        //true
@@ -77,7 +78,7 @@ export default function rootReducers(state = initialState, action) {
                 if(b.rating > a.rating) return 1
                 return 0
             })
-            console.log(filtrado)
+
             return{
                 ...state,
                 videogames: filtrado
@@ -99,7 +100,7 @@ export default function rootReducers(state = initialState, action) {
             case GET_DETAIL:
                 return {
                     ...state,
-                    detail: action.payload          //
+                    detail: action.payload          
                 }
                 case DETAIL_CLEAN:
                     return {
@@ -115,7 +116,7 @@ export default function rootReducers(state = initialState, action) {
                     return {
                         ...state,
                         noEncontrado: [action.payload]
-                     
+                    
                     }
                 case EMPTY_ERROR:
                     return {

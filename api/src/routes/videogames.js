@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
     try {
     const {name} = req.query                        
-         let videogamesTotal = await getAllInfo();
+        let videogamesTotal = await getAllInfo();
     if(name){
         let videogamesName = videogamesTotal.filter(e => e.name.toLowerCase().includes(name.toLowerCase()))//
        videogamesName.length?// videogamesName.length.slice(0, 15) ?                                     //slice
@@ -21,7 +21,7 @@ router.get('/', async (req, res, next) => {
     } catch (error) {
         console.log(error, "no se pueden traer los videogames")
         // next()
-      }
+    }
 });
 
 router.post('/', async (req, res) => {
@@ -53,16 +53,16 @@ router.post('/', async (req, res) => {
 router.get('/name', async (req, res) => {
     try {
         const {name} = req.query                        
-             let videogamesTotal = await getinfoName(name);
+            let videogamesTotal = await getinfoName(name);
             // let videogamesName = videogamesTotal.filter(e => e.name.toLowerCase().includes(name.toLowerCase()))//
-           videogamesTotal.length?
+        videogamesTotal.length?
             res.status(200).send(videogamesTotal.slice(0, 15)) :
             res.status(404).send(`videogame ${name} No encontrado`);                               
         } catch (error) {
             console.log(error, "no se pueden traer los videogames")
-       
-          }
-       
+    
+        }
+    
 })
 
 router.get('/platforms', async (req, res) => {
@@ -77,7 +77,6 @@ router.get('/:id', async (req, res, next) => {
     const {id} = req.params
     try {
         const videogameId = await getId(id)
-            // videogameId.length ?
             videogameId?
             res.status(200).json(videogameId) :
             res.status(404).send('Id no encontrado 😥')
@@ -100,77 +99,26 @@ router.delete('/:id', async (req, res, next) => {
         res.status(201).json(idFind)
 
     } catch (error) {
-         next(error)
+        next(error)
     }
 })
 
-router.put('/:id', async (req, res) => {
-
-    let { id } = req.params
-    let {name} = req.body
-
-    let rta = await Videogames.update(
-        {
-            name: name
-        },
-        {
-            where: {
-                id: id
-            }
-        }
-    )
-
-    res.json(rta)
-
-});
-
-// router.put('/:id', async (req, res) => {
-//     const {id} = req.params;
-//     let {name, image, platforms, genres, released, rating, description} = req.body
-//         const idid = await modify(id)
-//         try {
-//     if(id){
-//         res. status(201).send(idid = {
-//             name: "alberto",
-//             image: "nada",
-//             platforms: ['PC', 'Xbox Series S/X', 'PlayStation 4', 'PlayStation 3'],
-//             genres: ["Adventure", "Action"],
-//             released: "21-05-2011",
-//             rating: 4.29,
-//             description: "es el mejor juego modificado"
-//         })   
-//     }
-//         return res.status(404).send("el id para modificar no ha sido encontrado")
-//     } catch (error) {
-//         console.log(error)
-//     }
-    
-// })
+router.put('/:id', async(req, res, next) => {
+    let {id} = req.params
+    let{name} = req.body
+    try {
+        let change = await Videogames.update(
+            {
+                name: name
+            },
+           {where: 
+            {
+                id:id
+            }} 
+        )
+    } catch (error) {
+        next(error)
+    }
+})
 
 module.exports = router;
-
-
-
-
-//--------------------
-// server.put('/videogame', (req, res) => {
-//     const {id, name, genre} = req.body;
-
-//     if(!id || !name || !genre){
-//         return res.status(404)
-//         .json({error: "No se recibieron los parámetros necesarios para modificar el vg"})
-//     }
-
-//     const vg = vg.find(p => p.id === id)
-
-//     if(!vg){
-//         return res.status(404)
-//         .json({error: "No hay id que corresponda con un vg valido"})
-//     }
-
-//     vg.name = name;
-//     vg.genre = genre;
-
-//     res.json(vg)
-
-// })

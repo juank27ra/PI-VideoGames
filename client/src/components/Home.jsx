@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux';
-import { getVideogames,filterVgByGenres,filterBycreate, orderByName, filterByRating, getGenres, emptyError, filterByplatform, getPlatforms } from '../redux/actions';
+import { getVideogames,filterVgByGenres,filterBycreate, orderByName, filterByRating, getGenres, emptyError, getPlatforms, filterByPlataformas } from '../redux/actions';
 import {Link} from 'react-router-dom'
 import Cardgame from './Cardgame';
 import Paginated from './Paginated';
@@ -15,7 +15,8 @@ export default function Home() {
     const allVideogames = useSelector((state) => state.videogames)    //trae en esta const todo lo que está en el state videogames en el reducer
     const allGenres = useSelector((state) => state.genres)
     const error = useSelector((state) => state.noEncontrado)
-    const platf= useSelector((state) => state.plataformas)
+    const platf = useSelector((state) => state.plataformas)
+  console.log(platf)
 
     const [/*order*/, setOrder] = useState('')
     const [currentPage, setCurrentPage] = useState(1)       //pag actual = 1 porque siempre voy a iniciar en la primerpagina
@@ -36,9 +37,9 @@ export default function Home() {
       setCurrentPage(nextPage)
     }
     const prevHandler = () => {
-     const prevPage = currentPage - 1
-     if(indexFirstVg === 0) return
-     setCurrentPage(prevPage)
+    const prevPage = currentPage - 1
+    if(indexFirstVg === 0) return
+    setCurrentPage(prevPage)
     }
 
 useEffect(() =>{                // trae del estado los vg cuando el componente se monta   //    me llena el estado cuando se monta el cmponente
@@ -62,16 +63,19 @@ function handleClick(e) {
 }
 function handleFilterByGenres(e){       
   e.preventDefault();
+  if(e.target.value === 'null') return
   dispatch(filterVgByGenres(e.target.value))
   setCurrentPage(1); 
 }
 function handleFilterCreate(e){     // en esta funcion envío a la accion el valor del select
   e.preventDefault();
+  if(e.target.value === 'null') return
   dispatch(filterBycreate(e.target.value))
-  // setCurrentPage(1);
+  setCurrentPage(1);
 }
 function handleOrderName(e){
   e.preventDefault(); 
+  if(e.target.value === 'null') return
   dispatch(orderByName(e.target.value));
   setCurrentPage(1); 
   setOrder(`Ordenado ${e.target.value}`)
@@ -79,14 +83,17 @@ function handleOrderName(e){
 
 function handleFilterRating(e){
   e.preventDefault(); 
+  if(e.target.value === 'null') return
   dispatch(filterByRating(e.target.value))     
   setCurrentPage(1); 
   setOrder(`Ordenado ${e.target.value}`)
 }
-function handleorderPlatform(e){
-  e.preventDefault()
-  dispatch(filterByplatform(e.target.value))
-  setCurrentPage(1)
+
+function handleorderPlatform(e){       
+  e.preventDefault();
+  if(e.target.value === 'null') return
+  dispatch(filterByPlataformas(e.target.value))
+  setCurrentPage(1); 
 }
 
   return (
@@ -97,11 +104,11 @@ function handleorderPlatform(e){
     <div className={style.navtot}>
           <br></br>
       <div className={style.navbar}>
-      <Searchbar/>
-         
+      <Searchbar  setCurrentPage={setCurrentPage}/>
+        
           <div>
           <select onChange={e => handleorderPlatform(e)}>
-          <option value=''>Platforms</option>
+          <option value='null'>PLATFORMS</option>
           {platf.map(e => (
             <option key={e.id} value={e.name}>{e.name}</option> 
 
@@ -137,25 +144,25 @@ function handleorderPlatform(e){
 
             <Link to = {'/create' }><button>CREATE GAMING</button></Link>
           </div>   
-     </div>
+    </div>
     </div>
           <div> 
           {
             error.length > 0 ? <img src='https://i.pinimg.com/564x/5f/92/5a/5f925a4b065b191e76aed89ab4d94d17.jpg' 
-            alt='' height="600px" width="600px" />:  
+            alt='' height="500px" width="600px" />:  
             <Paginated 
                 vgPerPage={vgPerPage}       //15
                 allVideogames={allVideogames.length}    //const
                 paginado={paginado}     
                 currentPage={currentPage}
+                prevHandler={prevHandler}
+                nextHandler={nextHandler}
             />
                 }
           </div>
 
           <div className={style.card}>
                 {
-                //me traigo las props de card porque este componente home ya se trajo el state
-                // global, entonces lo mapeo y le paso cada cosa que necesito en la card
                 error.length > 0 ? <h1 >{error[0]}</h1> :
                 currentVg ?
                 currentVg.map((e) => {
@@ -174,13 +181,13 @@ function handleorderPlatform(e){
                       )
                     }) : <h2>Loading...</h2>
                   }
-               </div>
+              </div>
                 <div className={style.botones}>
                   { error.length > 0 ? null:  <h5>Pagina: {currentPage}</h5>}
-                 <button onClick={e => prevHandler(e)}>Prev</button> <button onClick={ e =>nextHandler(e)}>Next</button>
+                  <button onClick={e => prevHandler(e)}>Prev</button> <button onClick={ e =>nextHandler(e)}>Next</button>
                 </div>
                 <br/>
-           
+                {/* <Link '/landingPage'> volver</Link> */}
     </div>
   )
 }

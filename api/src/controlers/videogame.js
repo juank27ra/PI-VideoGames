@@ -2,7 +2,7 @@
 const axios = require ('axios')
 require ('dotenv').config()
 const {API_KEY} = process.env
-// const API_KEY = "751305d507034a729a0f5ece9c3c8c6f"
+// const API_KEY = "dc2bb679db9c4bc496e8858c94efb55f"
 const {Videogames, Genres} = require ('../db')
 const {Op} = require ('sequelize')
 
@@ -11,11 +11,11 @@ const getApiVideogames = async () => {
         let videogames=[];
         let api = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
             videogames = videogames.concat(api.data.results);
-        for(let i=0;i<4;i++){ //te trae los 100 juegos + toda la data innecesaria 
+        for(let i=0;i<4;i++){ 
             api = await axios.get(api.data.next);
             videogames = videogames.concat(api.data.results);
         }
-        videogames = videogames.map(e =>{   //aquí limpiamos para que los datos solo tengan la info que necesito.
+        videogames = videogames.map(e =>{  
             let pedido = {
                 id: e.id,
                 name: e.name,
@@ -31,16 +31,16 @@ const getApiVideogames = async () => {
         });
         return videogames;
     }catch(err){
-        console.log("Error en traer datos desde api");       // (err)    
+        console.log("Error en traer datos desde api");        
     }
 }
 
 const getDbVideogames = async () => {
     try{
-     return await Videogames.findAll({      //Busque varias instancias. o encuentre todo que
+     return await Videogames.findAll({      
         include: {
              model: Genres,
-             attributes: ["name"],            //[]
+             attributes: ["name"],            
              through: {                     //mediante
                 attributes: [],
              }
@@ -66,9 +66,7 @@ const getDbVideogames = async () => {
 
     const getId = async (id) => {
         try{
-            // let x = {id: id}
-            // let y = id.length
-         if (id.length > 10) {                  //videogame creados con uuid 
+         if (id.length > 10) {                  
             let videogamedb = await Videogames.findAll({  
                 include: {
                 model: Genres
@@ -92,7 +90,7 @@ const getDbVideogames = async () => {
             return vg[0]
             }else{
                 let url = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
-                 let videodb = {        //[]                 videogame de la Api
+                let videodb = {       
                     name: url.data.name,
                     id: url.data.id,
                     image: url.data.background_image,
@@ -105,7 +103,7 @@ const getDbVideogames = async () => {
                 return videodb
             }
         }catch(err){
-             console.log("no se pudo traer el juego por id")       //()
+            console.log("no se pudo traer el juego por id")      
         }
     }  
 
@@ -114,7 +112,7 @@ const getDbVideogames = async () => {
             let videogames=[];
             let api = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&search=${name}`);
             api.data.results.map(e => {
-                 videogames.push(  //aquí limpiamos para que los datos solo tengan la info que necesito.
+                 videogames.push(  
                 {
                     id: e.id,
                     name: e.name,
@@ -122,7 +120,7 @@ const getDbVideogames = async () => {
                     released: e.released,
                     rating: e.rating,
                     platforms: e.platforms.map((e) => e.platform.name),
-                    genres: e.genres.map((e) => e),                         //
+                    genres: e.genres.map((e) => e),                         
                     description: e.description,
                     videogameApi: true,
                 }
@@ -133,7 +131,7 @@ const getDbVideogames = async () => {
 
     const DbVideogames = async (name) => {
         try{
-         return await Videogames.findAll({      //Busque varias instancias. o encuentre todo que 
+         return await Videogames.findAll({      
             where: {
                 name:{
                     [Op.iLike]:`%${name}%`
@@ -156,9 +154,9 @@ const getDbVideogames = async () => {
     const getPlataformas = async () => {
     try{
         let  platforms =  await getApiVideogames()
-   platforms = platforms.map(e => e.platforms).flat()
-   platforms =[ ...new Set(platforms.sort())]
-   platforms = platforms.map((e, i) => {
+    platforms = platforms.map(e => e.platforms).flat()
+    platforms =[ ...new Set(platforms.sort())]
+    platforms = platforms.map((e, i) => {
         return {
             id: i + 1,
             name: e
@@ -168,9 +166,9 @@ const getDbVideogames = async () => {
     }catch(err){
         console.log(err)
     }
-   }
-   
-   const deleteid = async (id) => {
+    } 
+
+    const deleteid = async (id) => {
     
         const findid = await getId(id)
         await Videogames.destroy({
@@ -179,33 +177,13 @@ const getDbVideogames = async () => {
             }
         })
         return `el videogame ${findid.name} ha sido eliminado con exito`
-   }
+    }
 
-//    const modify = async(id) => {
-//     const modId = await getId(id)
-//     console.log(modId, "soy 186")
-//     await Videogames.update({
-//         where: {
-//             name: 'Jorge'
-//         }
-//     })
-//     return "El videogame actualizado con exito "
-//    }
+module.exports = {
+    getAllInfo,
+    getId, 
+    getinfoName,
+    getPlataformas, 
+    deleteid,
 
-//    function modyfy(id){
-//     const findid = getId(id)
-//     console.log(findid)
-//         // .then(res => res)
-//         .then(res => res.findid)
-//    }
-// console.log(modyfy(3498))
-
- module.exports = {
-     getAllInfo,
-     getId, 
-     getinfoName,
-     getPlataformas, 
-     deleteid,
-    //  modify
-
- }
+}

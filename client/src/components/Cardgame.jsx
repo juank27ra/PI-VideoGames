@@ -2,7 +2,7 @@ import React from 'react'
 import style from '../css/Cardgame.module.css'
 
 export default function Cardgame({image, name, genres, rating, platforms}) {
-console.log({platforms})
+
   return (
     
     <div className={style.gen} >
@@ -14,8 +14,9 @@ console.log({platforms})
         <p className={style.titlegenero}>Genres:</p> {genres.map((e, i) => 
           <p className={style.genero} key={i}>{e.name? e.name : e}</p>
         )}
-        platforms: {platforms.map(e =>
-        <p key={e}>{e}</p> )}
+        <p className={style.titlegenero}>Platforms:</p> {platforms.map((e, i) => 
+          <p className={style.platforms} key={i}>{e.name? e.name : e}</p>
+        )}
       </div>
     </div>
   )

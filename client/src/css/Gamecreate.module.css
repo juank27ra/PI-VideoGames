@@ -1,10 +1,17 @@
 
-.inputs{
+.inputs {
   flex-direction: column;
   gap: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 100px;
+}
+.inputs input {
+  font-size: 25px;
+}
+.input{
+  font-size: 25px;
 }
 .nombre{
   text-shadow: 8px 8px 3px rgb(238, 238, 238);
@@ -14,7 +21,7 @@
   font-style: italic;
   text-transform: uppercase;
   letter-spacing: 6px;
-  color: #4416c4;
+  color: orange;
   background-color: transparent;
 }
 .total{
@@ -25,15 +32,17 @@
     height: 150vh;
     width: 100%;
     margin: 0;
+    font-size: 30px;
     
     
 }
 .title{
-  color:aqua;
+  color:rgb(25, 4, 130);
   font-weight: 700;
 }
 .errors{
-  color: red;
+  color: rgb(92, 6, 6);
+  font-weight: bolder;
 }
 
 
@@ -89,4 +98,13 @@
   height: 300px;
   width: 400px;
 
+}
+.boton{
+  font-size: 25px;
+  padding: 15px;
+  margin-top: 25px;
+}
+.contBoton{
+  display: flex;
+  flex-direction: row;
 }

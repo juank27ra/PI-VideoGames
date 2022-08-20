@@ -8,7 +8,7 @@ export default function Landingpage() {
     <br></br>
         <h2 className={style.tit}>GAMEPAGE</h2>
         <Link to = {'/home'} >
-            <button className={style.but}>STAR</button>
+            <button className={style.but}>START</button>
         </Link>
 
     </div>

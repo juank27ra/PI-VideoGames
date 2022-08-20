@@ -11,8 +11,8 @@ function validate(input){
     
     if(!input.name){
         errors.name = "Se requiere un Nombre"
-      }else if (!RegExpressionName.test(input.name)){
-       errors.name = 'Nombre no Valido';
+        }else if (!RegExpressionName.test(input.name)){
+        errors.name = 'Nombre no Valido';
         }             
     if(!input.rating ){
         errors.rating = 'Se requiere el número'; 
@@ -34,9 +34,9 @@ function validate(input){
 
     if(!input.description){
         errors.description = "La descripción es requerida."
-      } else if(input.description.length > 100){
+        } else if(input.description.length > 100){
         errors.description = "La descriptción no debe exceder los 100 caracteres";
-      } 
+        } 
     if(input.platforms.length < 1){
         errors.platforms = "complete este campo"
     }
@@ -64,7 +64,7 @@ export default function Gamecreate() {
             description:'',
             genres: []
     })
-   
+
     useEffect(() => {
         dispatch(getGenres())       //para uqe me cargue todos los generos
         dispatch(getPlatforms())
@@ -132,12 +132,11 @@ export default function Gamecreate() {
     }  
     
     
-     const handleDelete = (e) => {
+    const handleDelete = (e) => {
         setInput({
             ...input,
             genres: input.genres.filter(el => el !== e)
         })
-      
     }
 //----------------------------------------------------
     const handleDeleteDos = (e) => {
@@ -145,10 +144,9 @@ export default function Gamecreate() {
             ...input,
             platforms: input.platforms.filter(el => el !== e)
         })
-      
     }
 
-  return (
+    return (
     <div className={Style.total} >
         <br></br>
         <div className={Style.nombre}>  <h1>CREATE GAMING</h1></div>
@@ -157,6 +155,7 @@ export default function Gamecreate() {
             <div>
                 <label className={Style.title}>Name: </label>
                 <input
+                className={Style.input}
                     type= 'text'
                     value={input.name}
                     name= 'name'
@@ -171,7 +170,7 @@ export default function Gamecreate() {
             <div>
                 <label className={Style.title}>Rating: </label>
                 <input
-                    
+                    className={Style.input}
                     type= 'number'
                     max= '5'
                     step= '0.01'
@@ -188,7 +187,7 @@ export default function Gamecreate() {
             </div>
         <div>                   
                 <label className={Style.title}>Platforms: </label>
-                <select onChange={(e) => handleSelectDos(e)}>Selecciona una opcion
+                <select className={Style.input} onChange={(e) => handleSelectDos(e)}>Selecciona una opcion
                 <option value='' disabled  >Selecciona una opcion</option>
                     {platforms?.map(e => (
                             <option key={e.id} value={e.name}>{e.name} </option>
@@ -226,7 +225,7 @@ export default function Gamecreate() {
             </div>
             <div>
                     <div className={Style.img}>
-                          { input.image? <img className={Style.imgsimul} src={input.image} alt=""/> : null}
+                        { input.image? <img className={Style.imgsimul} src={input.image} alt=""/> : null}
                     </div>
                     <label className={Style.title}>Image: </label>
                     <input
@@ -244,8 +243,8 @@ export default function Gamecreate() {
 
                 <div> 
                 <label className={Style.title}>Genres: </label>    
-                    <select name="genres" onChange={(e) => handleSelect(e)}>
-                     <option value='' >Select</option>
+                    <select className={Style.input} name="genres" onChange={(e) => handleSelect(e)}>
+                    <option value='' >Select</option>
                         {genres?.map((e) => {               
                                 return(
                                 <option key={e.id} value={e.name}>{e.name}</option>   
@@ -273,26 +272,26 @@ export default function Gamecreate() {
             <div>
                     <label className={Style.title}>Description: </label>
                     <textarea
+                    className={Style.input}
                     type= 'text'
                     value= {input.description}
                     name= 'description'
                     placeholder='description'
                     onChange={(e) => handleChange(e)}
                     />
-                     {errors.description && (
+                    {errors.description && (
                         <p className={Style.errors}>{errors.description}</p>
                     )}
             </div>
-    <div>
+    <div className={Style.contBoton}>
                     <button disabled={Object.keys(errors).length} type="submit" className={Style.boton}><h3>Create Game</h3></button>
                     <div className={Style.volver}>
-                    <Link to='/home'><button>{<h3>Return</h3>}</button></Link>
+                    <Link to='/home'><button className={Style.boton}>{<h3>Return</h3>}</button></Link>
                     </div>
     </div>
         </form>     
                 
     </div>
 
-  )
+    )
 }
-//disabled={Object.keys(errors).length} 

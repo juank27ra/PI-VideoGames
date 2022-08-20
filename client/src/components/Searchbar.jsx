@@ -5,7 +5,7 @@ import {getinfoName} from '../redux/actions'
 import style from '../css/Searchbar.module.css'
 
 
-export default function Searchbar() {
+export default function Searchbar({setCurrentPage}) {
     const dispatch = useDispatch()
     const [name, setName] = useState("")
 
@@ -18,9 +18,9 @@ function handleSubmit(e){
     if(!name){
         alert("Ingrese nombre de busqueda")
     }else{
-      try{ dispatch(getinfoName(name))   //lo que tengo en el input name le va a llegar a mi accion 
-   
-       setName("") }
+        try{ dispatch(getinfoName(name))   //lo que tengo en el input name le va a llegar a mi accion 
+        setCurrentPage(1)
+        setName("") }
         catch(e){
             console.log(e, "soy el error ")
         }
