@@ -16,7 +16,6 @@
 
  - Clonar el repositorio en sus computadoras para comenzar
 
-
 __IMPORTANTE:__ Es necesario contar minimamente con la última versión estable de Node y NPM.
 
 Actualmente las versiónes necesarias son:
@@ -35,10 +34,8 @@ DB_PASSWORD=passwordDePostgres
 DB_HOST=localhost
 ```
 
-Reemplazar `usuariodepostgres` y `passwordDePostgres` con tus propias credenciales para conectarte a postgres. Este archivo va ser ignorado en la subida a github, ya que contiene información sensible (las credenciales).
-
+Reemplazar `usuariodepostgres` y `passwordDePostgres` con tus propias credenciales para conectarte a postgres. 
 Adicionalmente será necesario que creen desde psql una base de datos llamada `videogames`
-
 
 ## Enunciado
  la api externa [rawg](https://rawg.io/apidocs) 
