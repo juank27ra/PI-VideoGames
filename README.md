@@ -36,7 +36,6 @@ DB_HOST=localhost
 Reemplazar `usuariodepostgres` y `passwordDePostgres` con tus propias credenciales para conectarte a postgres. 
 Adicionalmente será necesario que creen desde psql una base de datos llamada `videogames`
 
-## Enunciado
  la api externa [rawg](https://rawg.io/apidocs) 
  
 - Buscar videjuegos
