@@ -10,7 +10,7 @@
 
 - Construir una App utlizando React, Redux, Node y Sequelize.
 - Aprender mejores prácticas.
-- Aprender y practicar el workflow de GIT.
+- Practicar el workflow de GIT.
 
 ## Comenzando
 
