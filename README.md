@@ -9,7 +9,6 @@
 ## Objetivos del Proyecto
 
 - Construir una App utlizando React, Redux, Node y Sequelize.
-- Aprender mejores prácticas.
 - Practicar el workflow de GIT.
 
 ## Comenzando
